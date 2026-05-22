@@ -79,7 +79,7 @@ export default function BentoGrid() {
   return (
     <section id="features" className="relative py-24 px-6 bg-black z-10 flex flex-col items-center">
       {/* Heading */}
-      <div className="max-w-5xl w-full text-center md:text-left mb-16">
+      <div className="max-w-5xl w-full text-center mb-16">
         <div className="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-3">
           The Threat-Informed Analyst
         </div>

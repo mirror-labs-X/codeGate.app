@@ -227,13 +227,15 @@ interface HeroProps {
 
 export default function Hero({ onOpenDemo }: HeroProps) {
   const [currentStep, setCurrentStep] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
+    if (isPaused) return;
     const timer = setInterval(() => {
       setCurrentStep((prev) => (prev + 1) % SIMULATION_STEPS.length);
     }, 4000);
     return () => clearInterval(timer);
-  }, []);
+  }, [isPaused]);
 
   const activeStep = SIMULATION_STEPS[currentStep];
   const StepIcon = activeStep.icon;
@@ -370,9 +372,9 @@ export default function Hero({ onOpenDemo }: HeroProps) {
               <div className="w-3 h-3 rounded-full bg-amber-500/80" />
               <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
             </div>
-            <div className="text-[10px] font-mono tracking-widest text-zinc-500 uppercase flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-              codegate-brain // autonomous-hunt
+            <div className="text-[10px] font-mono tracking-widest text-zinc-500 uppercase flex items-center gap-1.5 select-none">
+              <span className={`w-1.5 h-1.5 rounded-full ${isPaused ? "bg-amber-400" : "bg-cyan-400 animate-pulse"}`} />
+              codegate-brain // {isPaused ? "interactive-mode" : "autonomous-hunt"}
             </div>
             <div className="w-12" /> {/* spacer to center title */}
           </div>
@@ -382,7 +384,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
             {/* Left Console logs (Col span 2) */}
             <div className="p-4 md:col-span-2 bg-black/60 border-r border-white/[0.05] font-mono text-xs flex flex-col justify-between gap-4">
               <div className="space-y-4">
-                <div className="text-zinc-500 flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider">
+                <div className="text-zinc-500 flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider select-none">
                   Active Log Ticker
                 </div>
 
@@ -392,35 +394,39 @@ export default function Hero({ onOpenDemo }: HeroProps) {
                     const isCurrent = idx === currentStep;
 
                     return (
-                      <div
+                      <button
                         key={idx}
-                        className={`transition-all duration-300 ${
-                          isPassedOrCurrent ? "opacity-100" : "opacity-20"
+                        onClick={() => {
+                          setCurrentStep(idx);
+                          setIsPaused(true);
+                        }}
+                        className={`w-full text-left transition-all duration-300 focus:outline-none cursor-pointer group/ticker ${
+                          isPassedOrCurrent ? "opacity-100" : "opacity-25 hover:opacity-75"
                         } ${isCurrent ? "scale-[1.02] origin-left" : ""}`}
                       >
                         <div className="flex items-start gap-2">
                           <span
-                            className={`mt-0.5 text-[10px] ${
+                            className={`mt-0.5 text-[10px] transition-colors duration-300 ${
                               idx < currentStep
                                 ? "text-emerald-400"
                                 : isCurrent
                                 ? "text-cyan-400"
-                                : "text-zinc-600"
+                                : "text-zinc-600 group-hover/ticker:text-zinc-400"
                             }`}
                           >
                             {idx < currentStep ? "✓" : "●"}
                           </span>
                           <p
-                            className={
+                            className={`transition-colors duration-300 ${
                               isCurrent
                                 ? "text-zinc-100 font-semibold"
-                                : "text-zinc-400"
-                            }
+                                : "text-zinc-400 group-hover/ticker:text-zinc-200"
+                            }`}
                           >
                             {step.message}
                           </p>
                         </div>
-                      </div>
+                      </button>
                     );
                   })}
                 </div>
