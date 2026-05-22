@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, MouseEvent } from "react";
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
 import { Code, Eye, ShieldCheck, Terminal, Users, BarChart3 } from "lucide-react";
 
 interface ValuePropCardProps {
@@ -16,6 +16,11 @@ interface ValuePropCardProps {
 function ValuePropCard({ children, className = "", isHighlighted, onClick, colorType, variants }: ValuePropCardProps) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+
+  // Emil Kowalski spring configuration: provides fluid, elegant lag and inertia
+  const springConfig = { damping: 40, stiffness: 200, mass: 0.6 };
+  const springX = useSpring(mouseX, springConfig);
+  const springY = useSpring(mouseY, springConfig);
 
   function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
     const { currentTarget, clientX, clientY } = e;
@@ -67,7 +72,7 @@ function ValuePropCard({ children, className = "", isHighlighted, onClick, color
         style={{
           background: useMotionTemplate`
             radial-gradient(
-              320px circle at ${mouseX}px ${mouseY}px,
+              320px circle at ${springX}px ${springY}px,
               ${glowColor} 0%,
               ${secondaryGlowColor} 50%,
               transparent 80%
@@ -82,7 +87,7 @@ function ValuePropCard({ children, className = "", isHighlighted, onClick, color
         style={{
           background: useMotionTemplate`
             radial-gradient(
-              320px circle at ${mouseX}px ${mouseY}px,
+              320px circle at ${springX}px ${springY}px,
               ${borderGlowColor},
               transparent 70%
             )
@@ -190,7 +195,7 @@ export default function ValueProp() {
       id="value-prop" 
       onClickCapture={handleInteraction}
       onKeyDownCapture={handleInteraction}
-      className="relative py-24 px-6 bg-black z-10 flex flex-col items-center"
+      className="relative py-10 md:py-14 px-6 bg-black z-10 flex flex-col items-center"
     >
       {/* Background radial accent glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0 w-[500px] h-[500px] rounded-full bg-indigo-500/5 blur-[120px]" />
@@ -217,7 +222,7 @@ export default function ValueProp() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className="relative flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium transition-colors cursor-pointer select-none"
+                  className="relative flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium transition-colors cursor-pointer select-none active:scale-[0.97] transition-transform duration-150"
                   style={{
                     color: isActive ? "#ffffff" : "#a1a1aa",
                   }}

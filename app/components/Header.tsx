@@ -26,7 +26,7 @@ export default function Header({ onOpenDemo }: HeaderProps) {
       className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between w-[calc(100%-2rem)] max-w-5xl px-6 py-2.5 rounded-full bg-black/30 border border-white/[0.08] backdrop-blur-lg shadow-2xl"
     >
       {/* Brand Logo */}
-      <a href="#" className="flex items-center gap-2.5 group">
+      <a href="#" className="flex items-center gap-2.5 group active:scale-[0.97] transition-transform duration-150">
         <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-900 border border-white/[0.1] overflow-hidden">
           {/* Glowing dot in logo */}
           <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -80,7 +80,7 @@ export default function Header({ onOpenDemo }: HeaderProps) {
       <MagneticButton range={50} actionStrength={0.25}>
         <button 
           onClick={onOpenDemo}
-          className="relative px-5 py-2 text-xs font-semibold text-black bg-white rounded-full transition-all hover:bg-zinc-100 hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] overflow-hidden group cursor-pointer"
+          className="relative px-5 py-2 text-xs font-semibold text-black bg-white rounded-full transition-all hover:bg-zinc-100 hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] active:scale-[0.97] transition-transform duration-150 overflow-hidden group cursor-pointer"
         >
           <span className="relative z-10">Request Pilot</span>
           <span className="absolute inset-0 -translate-x-full group-hover:translate-x-0 bg-gradient-to-r from-cyan-400 to-indigo-500 opacity-[0.1] transition-transform duration-300" />

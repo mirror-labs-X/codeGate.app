@@ -444,7 +444,7 @@ function RemediationSimulator() {
         {prStatus === "idle" && (
           <button
             onClick={handleApplyPatch}
-            className="w-full bg-cyan-500 text-black hover:bg-cyan-400 text-[11px] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98]"
+            className="w-full bg-cyan-500 text-black hover:bg-cyan-400 text-[11px] font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.97] transition-transform duration-150"
           >
             <span>Apply Secure Patch (1-Click PR)</span>
             <ArrowRight size={12} />
@@ -590,7 +590,7 @@ export default function ThreatLifecycle() {
       id="lifecycle"
       onClickCapture={handleInteraction}
       onKeyDownCapture={handleInteraction}
-      className="relative py-24 px-6 bg-black z-10 overflow-hidden"
+      className="relative py-10 md:py-14 px-6 bg-black z-10 overflow-hidden"
     >
       {/* Background glow effects */}
       <div className="absolute top-1/4 left-0 pointer-events-none z-0 w-[400px] h-[400px] rounded-full bg-cyan-500/[0.02] blur-[120px]" />
@@ -611,7 +611,7 @@ export default function ThreatLifecycle() {
         </div>
 
         {/* Layout grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Left Column: Interactive Steps List */}
           <div className="lg:col-span-5 space-y-4">
             {steps.map((step) => {
@@ -622,7 +622,7 @@ export default function ThreatLifecycle() {
                 <button
                   key={step.id}
                   onClick={() => setActiveStepId(step.id)}
-                  className={`group w-full text-left p-6 rounded-2xl border transition-all duration-300 flex items-start gap-4 cursor-pointer relative overflow-hidden ${
+                  className={`group w-full text-left p-6 rounded-2xl border transition-all duration-300 flex items-start gap-4 cursor-pointer relative overflow-hidden active:scale-[0.97] transition-transform duration-150 ${
                     isActive
                       ? "border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.05)] bg-zinc-950/60"
                       : "border-white/[0.1] bg-zinc-950/20 hover:bg-zinc-900/10 hover:border-white/[0.18]"

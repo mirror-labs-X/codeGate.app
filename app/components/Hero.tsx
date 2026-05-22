@@ -248,7 +248,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
   };
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-20 px-6 overflow-hidden bg-black">
+    <section className="relative min-h-screen flex flex-col items-center justify-center pt-28 md:pt-36 pb-10 md:pb-14 px-6 overflow-hidden bg-black">
       {/* Background Spotlight & Grid */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_50%_35%,rgba(0,240,255,0.06),transparent_50%)]" />
       <div
@@ -276,10 +276,10 @@ export default function Hero({ onOpenDemo }: HeroProps) {
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ type: "spring", stiffness: 90, damping: 14 }}
-          className="text-4xl sm:text-6xl font-semibold tracking-tight text-white max-w-3xl leading-[1.1] mb-6"
+          className="text-4xl sm:text-6xl font-semibold tracking-tight text-white max-w-5xl leading-[1.1] mb-6"
         >
           Agile Security.{" "}
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-indigo-400 to-cyan-400 bg-[length:200%_auto] animate-gradient-flow font-bold">
+          <span className="text-cyan-400 font-bold">
             Flat-Rate Scaling.
           </span>{" "}
           Absolute Data Sovereignty.
@@ -305,7 +305,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
           <MagneticButton range={60} actionStrength={0.3}>
             <button 
               onClick={onOpenDemo}
-              className="flex items-center gap-2 px-8 py-3 rounded-full bg-white text-black font-semibold text-sm transition-all hover:bg-zinc-100 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] cursor-pointer"
+              className="flex items-center gap-2 px-8 py-3 rounded-full bg-white text-black font-semibold text-sm transition-all hover:bg-zinc-100 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] active:scale-[0.97] transition-transform duration-150 cursor-pointer"
             >
               Request a Pilot <ArrowRight size={16} />
             </button>
@@ -314,7 +314,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
           <MagneticButton range={60} actionStrength={0.3}>
             <a 
               href="#architecture"
-              className="flex items-center gap-2 px-8 py-3 rounded-full bg-zinc-900 border border-white/[0.08] hover:border-white/[0.15] text-zinc-300 font-medium text-sm transition-all hover:bg-zinc-800/80 cursor-pointer"
+              className="flex items-center gap-2 px-8 py-3 rounded-full bg-zinc-900 border border-white/[0.08] hover:border-white/[0.15] text-zinc-300 font-medium text-sm transition-all hover:bg-zinc-800/80 active:scale-[0.97] transition-transform duration-150 cursor-pointer"
             >
               Read Architecture
             </a>

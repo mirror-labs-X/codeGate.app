@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, MouseEvent, useEffect } from "react";
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
 import { Target, Brain, Shield, ChevronRight, Database, Code, ShieldCheck } from "lucide-react";
 
 // Individual Bento Card with Mouse Spotlight Effect
@@ -13,6 +13,11 @@ interface BentoCardProps {
 export function BentoCard({ children, className = "" }: BentoCardProps) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+
+  // Emil Kowalski spring configuration: provides fluid, elegant lag and inertia
+  const springConfig = { damping: 40, stiffness: 200, mass: 0.6 };
+  const springX = useSpring(mouseX, springConfig);
+  const springY = useSpring(mouseY, springConfig);
 
   function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
     const { currentTarget, clientX, clientY } = e;
@@ -32,7 +37,7 @@ export function BentoCard({ children, className = "" }: BentoCardProps) {
         style={{
           background: useMotionTemplate`
             radial-gradient(
-              320px circle at ${mouseX}px ${mouseY}px,
+              320px circle at ${springX}px ${springY}px,
               rgba(0, 240, 255, 0.08) 0%,
               rgba(99, 102, 241, 0.04) 50%,
               transparent 80%
@@ -47,7 +52,7 @@ export function BentoCard({ children, className = "" }: BentoCardProps) {
         style={{
           background: useMotionTemplate`
             radial-gradient(
-              320px circle at ${mouseX}px ${mouseY}px,
+              320px circle at ${springX}px ${springY}px,
               rgba(0, 240, 255, 0.15),
               transparent 70%
             )
@@ -77,7 +82,7 @@ export default function BentoGrid() {
   }, []);
 
   return (
-    <section id="features" className="relative py-24 px-6 bg-black z-10 flex flex-col items-center">
+    <section id="features" className="relative py-10 md:py-14 px-6 bg-black z-10 flex flex-col items-center">
       {/* Heading */}
       <div className="max-w-5xl w-full text-center mb-16">
         <div className="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-3">

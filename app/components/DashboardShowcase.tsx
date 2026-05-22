@@ -456,51 +456,68 @@ function ComplianceTab() {
   const gauges = [
     { label: "SOC 2 Type II", val: 100, color: "stroke-emerald-400" },
     { label: "PCI-DSS v4.0", val: 100, color: "stroke-emerald-400" },
-    { label: "ISO 27001", val: 94, color: "stroke-cyan-400" }
+    { label: "ISO 27001", val: 94, color: "stroke-cyan-400" },
+    { label: "HIPAA Security", val: 100, color: "stroke-emerald-400" },
+    { label: "GDPR Audit", val: 98, color: "stroke-cyan-400" },
+    { label: "NIST CSF v2.0", val: 100, color: "stroke-emerald-400" }
   ];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-4 h-full">
       {/* Gauge panel */}
-      <div className="md:col-span-3 bg-zinc-950 p-5 rounded-2xl border border-white/[0.08] flex items-center justify-around">
-        {gauges.map((g, idx) => {
-          // Circular SVG parameters
-          const radius = 24;
-          const stroke = 3.5;
-          const circ = 2 * Math.PI * radius;
-          const strokeOffset = circ - (g.val / 100) * circ;
+      <div className="md:col-span-3 bg-zinc-950 p-4 rounded-2xl border border-white/[0.08] flex flex-col justify-between h-full">
+        <div>
+          <div className="flex items-center justify-between mb-3 pb-2 border-b border-white/[0.04]">
+            <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Compliance Posture</span>
+            <span className="text-[9px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">98.6% PASS</span>
+          </div>
 
-          return (
-            <div key={idx} className="flex flex-col items-center text-center">
-              <div className="relative w-16 h-16 flex items-center justify-center">
-                <svg className="w-full h-full transform -rotate-90">
-                  <circle
-                    cx="32"
-                    cy="32"
-                    r={radius}
-                    className="stroke-zinc-900 fill-none"
-                    strokeWidth={stroke}
-                  />
-                  <motion.circle
-                    cx="32"
-                    cy="32"
-                    r={radius}
-                    className={`fill-none ${g.color}`}
-                    strokeWidth={stroke}
-                    strokeDasharray={circ}
-                    initial={{ strokeDashoffset: circ }}
-                    animate={{ strokeDashoffset: strokeOffset }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                  />
-                </svg>
-                <div className="absolute font-mono text-[10px] font-bold text-white">
-                  {g.val}%
+          <div className="grid grid-cols-3 gap-x-2 gap-y-4 py-1">
+            {gauges.map((g, idx) => {
+              // Circular SVG parameters
+              const radius = 20;
+              const stroke = 3;
+              const circ = 2 * Math.PI * radius;
+              const strokeOffset = circ - (g.val / 100) * circ;
+
+              return (
+                <div key={idx} className="flex flex-col items-center text-center group cursor-pointer hover:scale-[1.03] transition-transform duration-200">
+                  <div className="relative w-12 h-12 flex items-center justify-center">
+                    <svg className="w-full h-full transform -rotate-90">
+                      <circle
+                        cx="24"
+                        cy="24"
+                        r={radius}
+                        className="stroke-zinc-900 fill-none"
+                        strokeWidth={stroke}
+                      />
+                      <motion.circle
+                        cx="24"
+                        cy="24"
+                        r={radius}
+                        className={`fill-none ${g.color}`}
+                        strokeWidth={stroke}
+                        strokeDasharray={circ}
+                        initial={{ strokeDashoffset: circ }}
+                        animate={{ strokeDashoffset: strokeOffset }}
+                        transition={{ duration: 1, ease: "easeOut" }}
+                      />
+                    </svg>
+                    <div className="absolute font-mono text-[9px] font-bold text-white">
+                      {g.val}%
+                    </div>
+                  </div>
+                  <span className="text-[9px] text-zinc-350 font-bold mt-1.5 block truncate max-w-full leading-none">{g.label}</span>
                 </div>
-              </div>
-              <span className="text-[10px] text-zinc-300 font-bold mt-2 block">{g.label}</span>
-            </div>
-          );
-        })}
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="text-[8px] text-zinc-500 border-t border-white/[0.04] pt-2 mt-2 font-mono flex items-center justify-between">
+          <span>AUDIT STATE: CONTROLS PASSED</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+        </div>
       </div>
 
       {/* Report exporter */}
@@ -754,7 +771,7 @@ export default function DashboardShowcase() {
       id="architecture"
       onClickCapture={handleInteraction}
       onKeyDownCapture={handleInteraction}
-      className="relative py-24 px-6 bg-black z-10 flex flex-col items-center overflow-hidden"
+      className="relative py-10 md:py-14 px-6 bg-black z-10 flex flex-col items-center overflow-hidden"
     >
       {/* Background soft glow behind showcase */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0 w-[600px] h-[600px] rounded-full bg-cyan-500/[0.03] blur-[150px]" />

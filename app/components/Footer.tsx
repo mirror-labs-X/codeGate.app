@@ -11,7 +11,7 @@ interface FooterProps {
 
 export default function Footer({ onOpenDemo }: FooterProps) {
   return (
-    <footer className="relative py-32 px-6 bg-black z-10 overflow-hidden flex flex-col items-center border-t border-white/[0.04]">
+    <footer className="relative py-10 md:py-14 px-6 bg-black z-10 overflow-hidden flex flex-col items-center border-t border-white/[0.04]">
       {/* Background Glow spotlight at bottom */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none z-0 w-[600px] h-[300px] rounded-t-full bg-cyan-500/[0.04] blur-[100px]" />
 
@@ -34,7 +34,7 @@ export default function Footer({ onOpenDemo }: FooterProps) {
           <MagneticButton range={60} actionStrength={0.35}>
             <button
               onClick={onOpenDemo}
-              className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-white text-black font-semibold text-sm transition-all hover:bg-zinc-100 hover:shadow-[0_0_30px_rgba(0,240,255,0.3)] cursor-pointer"
+              className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-white text-black font-semibold text-sm transition-all hover:bg-zinc-100 hover:shadow-[0_0_30px_rgba(0,240,255,0.3)] active:scale-[0.97] transition-transform duration-150 cursor-pointer"
             >
               Book a Demo Today <Calendar size={16} />
             </button>
@@ -43,7 +43,7 @@ export default function Footer({ onOpenDemo }: FooterProps) {
 
         {/* Bottom footer bar */}
         <div className="w-full pt-10 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 font-medium tracking-wide">
-          <a href="#" className="flex items-center gap-2 group cursor-pointer">
+          <a href="#" className="flex items-center gap-2 group active:scale-[0.97] transition-transform duration-150 cursor-pointer">
             <div className="relative flex items-center justify-center w-7 h-7 rounded-lg bg-zinc-950 border border-white/[0.08] overflow-hidden transition-all duration-300 group-hover:border-cyan-500/30 group-hover:shadow-[0_0_12px_rgba(6,182,212,0.15)]">
               {/* Subtle hover gradient background */}
               <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
