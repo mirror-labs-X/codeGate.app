@@ -5,7 +5,11 @@ import { motion } from "framer-motion";
 import { Calendar, ArrowRight } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 
-export default function Footer() {
+interface FooterProps {
+  onOpenDemo: () => void;
+}
+
+export default function Footer({ onOpenDemo }: FooterProps) {
   return (
     <footer className="relative py-32 px-6 bg-black z-10 overflow-hidden flex flex-col items-center border-t border-white/[0.04]">
       {/* Background Glow spotlight at bottom */}
@@ -28,7 +32,10 @@ export default function Footer() {
         {/* Magnetic CTA button */}
         <div className="mb-20">
           <MagneticButton range={60} actionStrength={0.35}>
-            <button className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-white text-black font-semibold text-sm transition-all hover:bg-zinc-100 hover:shadow-[0_0_30px_rgba(0,240,255,0.3)]">
+            <button 
+              onClick={onOpenDemo}
+              className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-white text-black font-semibold text-sm transition-all hover:bg-zinc-100 hover:shadow-[0_0_30px_rgba(0,240,255,0.3)] cursor-pointer"
+            >
               Book a Demo Today <Calendar size={16} />
             </button>
           </MagneticButton>
@@ -65,7 +72,9 @@ export default function Footer() {
             </a>
           </div>
 
-          <div>© 2026 CodeGate.app. All rights reserved.</div>
+          <div className="hover:text-cyan-400 transition-colors duration-300 cursor-default select-none">
+            © 2026 CodeGate.app. All rights reserved.
+          </div>
         </div>
       </div>
     </footer>

@@ -24,7 +24,7 @@ export function BentoCard({ children, className = "" }: BentoCardProps) {
   return (
     <div
       onMouseMove={handleMouseMove}
-      className={`group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-zinc-950/65 backdrop-blur-md p-8 transition-colors duration-300 hover:border-white/[0.12] ${className}`}
+      className={`group relative overflow-hidden rounded-2xl border border-white/[0.12] bg-zinc-950/65 backdrop-blur-md p-8 transition-colors duration-300 hover:border-white/[0.22] ${className}`}
     >
       {/* Light glow overlay following mouse */}
       <motion.div
@@ -110,7 +110,7 @@ export default function BentoGrid() {
           </div>
 
           {/* Interactive Radar Visualizer */}
-          <div className="flex-1 min-h-[180px] bg-zinc-900/20 border border-white/[0.04] rounded-xl flex items-center justify-center p-6 relative overflow-hidden">
+          <div className="flex-1 min-h-[180px] bg-zinc-900/20 border border-white/[0.08] rounded-xl flex items-center justify-center p-6 relative overflow-hidden">
             {/* Radar concentric rings */}
             <div className="w-36 h-36 rounded-full border border-white/[0.03] flex items-center justify-center relative">
               <div className="w-24 h-24 rounded-full border border-white/[0.04] flex items-center justify-center">
@@ -141,22 +141,27 @@ export default function BentoGrid() {
           </div>
         </BentoCard>
 
-        {/* Card 2: Medium ( Agentic Reasoning - ReAct ) */}
+        {/* Card 2: Exploit Verification */}
         <BentoCard className="flex flex-col justify-between min-h-[380px]">
           <div>
-            <div className="p-2 w-fit rounded-lg bg-indigo-950/40 border border-indigo-500/20 text-indigo-400 mb-6">
-              <Brain size={20} />
+            <div className="flex items-center justify-between mb-6">
+              <div className="p-2 w-fit rounded-lg bg-indigo-950/40 border border-indigo-500/20 text-indigo-400">
+                <Brain size={20} />
+              </div>
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                Preview
+              </span>
             </div>
             <h3 className="text-xl font-semibold text-zinc-100 tracking-tight mb-2">
-              Agentic Reasoning (ReAct)
+              Exploit Verification
             </h3>
             <p className="text-sm text-zinc-400 leading-relaxed font-normal">
-              Instead of just highlighting code matches, the agent queries environment contexts and runs data-flow validation models to mathematically prove if a vulnerability can be executed.
+              Instead of overwhelming your engineering team with thousands of false positives, CodeGate is designed to run sandboxed verification (planned via codegate-sandbox integration) to prove whether a vulnerability can actually be exploited.
             </p>
           </div>
 
           {/* Logic Tree Visual */}
-          <div className="my-6 p-4 rounded-xl bg-zinc-900/30 border border-white/[0.04] flex items-center justify-between relative overflow-hidden font-mono text-[10px]">
+          <div className="my-6 p-4 rounded-xl bg-zinc-900/30 border border-white/[0.08] flex items-center justify-between relative overflow-hidden font-mono text-[10px]">
             <div className="flex flex-col items-center gap-1 z-10">
               <div className="p-1.5 rounded-lg bg-zinc-950 border border-white/5 text-zinc-400">
                 <Code size={14} />
@@ -202,22 +207,22 @@ export default function BentoGrid() {
           </a>
         </BentoCard>
 
-        {/* Card 3: Medium ( Sovereign & On-Premises ) */}
+        {/* Card 3: Sovereign & Cost-Controlled */}
         <BentoCard className="flex flex-col justify-between min-h-[380px]">
           <div>
             <div className="p-2 w-fit rounded-lg bg-emerald-950/40 border border-emerald-500/20 text-emerald-400 mb-6">
               <Shield size={20} />
             </div>
             <h3 className="text-xl font-semibold text-zinc-100 tracking-tight mb-2">
-              100% Sovereign & On-Prem
+              Sovereign & Cost-Controlled
             </h3>
             <p className="text-sm text-zinc-400 leading-relaxed font-normal">
-              CodeGate packages localized Small Language Models (SLMs) configured and deployed directly inside your secure VPC. Your proprietary IP never touches external SaaS nodes.
+              Deploy CodeGate inside your firewall. Since repo scanning must be periodic and codebases grow continuously, pay-per-token API costs scale non-linearly. CodeGate guarantees unlimited scans for a predictable, flat compute cost.
             </p>
           </div>
 
           {/* Secure Firewall Shield Visual */}
-          <div className="my-6 p-4 rounded-xl bg-zinc-900/30 border border-white/[0.04] flex items-center justify-center relative overflow-hidden">
+          <div className="my-6 p-4 rounded-xl bg-zinc-900/30 border border-white/[0.08] flex items-center justify-center relative overflow-hidden">
             <div className="relative w-28 h-20 flex items-center justify-center">
               {/* Outer firewall ring */}
               <div className="absolute inset-0 rounded-lg border border-dashed border-emerald-500/20 flex items-center justify-center animate-[spin_20s_linear_infinite]" />
@@ -232,6 +237,95 @@ export default function BentoGrid() {
 
           <a href="#" className="inline-flex items-center gap-1 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors uppercase tracking-wider">
             View Compliance <ChevronRight size={14} />
+          </a>
+        </BentoCard>
+
+        {/* Card 4: Private Model Fine-Tuning */}
+        <BentoCard className="flex flex-col justify-between min-h-[380px]">
+          <div>
+            <div className="p-2 w-fit rounded-lg bg-purple-950/40 border border-purple-500/20 text-purple-400 mb-6">
+              <Brain size={20} />
+            </div>
+            <h3 className="text-xl font-semibold text-zinc-100 tracking-tight mb-2">
+              Private Model Tuning
+            </h3>
+            <p className="text-sm text-zinc-400 leading-relaxed font-normal">
+              Fine-tune custom security models (like Qwen3-Coder) on your own secure on-premises compute. Keep your proprietary code logic, APIs, and custom rules completely private.
+            </p>
+          </div>
+
+          {/* Training Progress Visual */}
+          <div className="my-6 p-4 rounded-xl bg-zinc-900/30 border border-white/[0.08] space-y-3 font-mono text-[10px]">
+            <div className="flex items-center justify-between pb-2 border-b border-white/5">
+              <span className="text-zinc-400 font-semibold text-[9px]">Local LoRA Training Console</span>
+              <span className="text-cyan-400 text-[8px] animate-pulse bg-cyan-500/10 px-1.5 py-0.5 rounded border border-cyan-500/20 font-medium">Training...</span>
+            </div>
+            <div className="flex justify-between text-zinc-400">
+              <span>Model Base</span>
+              <span className="text-zinc-500">Qwen3-Coder-30B-Instruct</span>
+            </div>
+            <div className="space-y-1.5">
+              <div className="flex justify-between text-zinc-400">
+                <span>Loss: 0.124</span>
+                <span className="text-zinc-500">Epoch 3/5</span>
+              </div>
+              <div className="w-full bg-zinc-950 rounded-full h-1.5 overflow-hidden border border-white/[0.04]">
+                <motion.div
+                  initial={{ width: "0%" }}
+                  animate={{ width: "65%" }}
+                  transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
+                  className="bg-purple-500 h-full rounded-full"
+                />
+              </div>
+            </div>
+            <div className="text-[8px] text-zinc-500 leading-normal">
+              Dataset prepared: prep_dataset.py // 12,450 local samples parsed
+            </div>
+          </div>
+
+          <a href="#architecture" className="inline-flex items-center gap-1 text-xs font-bold text-purple-400 hover:text-purple-300 transition-colors uppercase tracking-wider">
+            Start Tuning Pipeline <ChevronRight size={14} />
+          </a>
+        </BentoCard>
+
+        {/* Card 5: Developer-First Integrations */}
+        <BentoCard className="flex flex-col justify-between min-h-[380px]">
+          <div>
+            <div className="p-2 w-fit rounded-lg bg-pink-950/40 border border-pink-500/20 text-pink-400 mb-6">
+              <Code size={20} />
+            </div>
+            <h3 className="text-xl font-semibold text-zinc-100 tracking-tight mb-2">
+              Developer Integrations
+            </h3>
+            <p className="text-sm text-zinc-400 leading-relaxed font-normal">
+              Plug CodeGate directly into your existing development workflows, local IDEs, and CI/CD pipelines (GitHub, GitLab, Jenkins) to patch issues automatically.
+            </p>
+          </div>
+
+          {/* Pipelines mini visualizer */}
+          <div className="my-6 p-4 rounded-xl bg-zinc-900/30 border border-white/[0.08] flex flex-col gap-3 font-mono text-[9px]">
+            <div className="flex items-center justify-between text-zinc-400">
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+                <span>git commit -m "update api"</span>
+              </div>
+              <span className="text-zinc-500">main</span>
+            </div>
+            <div className="flex items-center gap-2 text-cyan-400 pl-4 border-l border-cyan-500/20 py-1">
+              <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              <span>codegate: verifying sandbox...</span>
+            </div>
+            <div className="flex items-center justify-between text-emerald-400">
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span>Pull Request #147 opened</span>
+              </div>
+              <span className="text-[8px] bg-emerald-500/10 px-1 py-0.2 rounded border border-emerald-500/20 font-bold">1-Click Patch</span>
+            </div>
+          </div>
+
+          <a href="#lifecycle" className="inline-flex items-center gap-1 text-xs font-bold text-pink-400 hover:text-pink-300 transition-colors uppercase tracking-wider">
+            View Integration Guides <ChevronRight size={14} />
           </a>
         </BentoCard>
       </div>

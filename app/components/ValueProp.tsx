@@ -1,8 +1,105 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, MouseEvent } from "react";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { Code, Eye, ShieldCheck, Terminal, Users, BarChart3 } from "lucide-react";
+
+interface ValuePropCardProps {
+  children: React.ReactNode;
+  className?: string;
+  isHighlighted: boolean;
+  onClick: () => void;
+  colorType: "devs" | "secops" | "execs";
+  variants?: any;
+}
+
+function ValuePropCard({ children, className = "", isHighlighted, onClick, colorType, variants }: ValuePropCardProps) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
+    const { currentTarget, clientX, clientY } = e;
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  let glowColor = "rgba(6, 182, 212, 0.08)";
+  let secondaryGlowColor = "rgba(99, 102, 241, 0.04)";
+  let borderGlowColor = "rgba(6, 182, 212, 0.15)";
+
+  if (colorType === "secops") {
+    glowColor = "rgba(99, 102, 241, 0.08)";
+    secondaryGlowColor = "rgba(168, 85, 247, 0.04)";
+    borderGlowColor = "rgba(99, 102, 241, 0.15)";
+  } else if (colorType === "execs") {
+    glowColor = "rgba(168, 85, 247, 0.08)";
+    secondaryGlowColor = "rgba(16, 185, 129, 0.04)";
+    borderGlowColor = "rgba(168, 85, 247, 0.15)";
+  }
+
+  // Construct card wrapper classes conditional on isHighlighted state
+  const baseClasses = "group relative overflow-hidden rounded-2xl transition-all duration-500 cursor-pointer select-none";
+  let stateClasses = "";
+  if (isHighlighted) {
+    if (colorType === "devs") {
+      stateClasses = "border border-cyan-500/50 hover:border-cyan-500/40 bg-zinc-950/90 backdrop-blur-md shadow-[0_0_35px_rgba(6,182,212,0.12)] scale-[1.02]";
+    } else if (colorType === "secops") {
+      stateClasses = "border border-indigo-500/50 hover:border-indigo-500/40 bg-zinc-950/90 backdrop-blur-md shadow-[0_0_35px_rgba(99,102,241,0.12)] scale-[1.02]";
+    } else {
+      stateClasses = "border border-purple-500/50 hover:border-purple-500/40 bg-zinc-950/90 backdrop-blur-md shadow-[0_0_35px_rgba(168,85,247,0.12)] scale-[1.02]";
+    }
+  } else {
+    // Inactive card uses premium glassmorphic border styling matching BentoCard
+    stateClasses = "border border-white/[0.12] hover:border-white/[0.22] bg-zinc-950/65 backdrop-blur-md";
+  }
+
+  return (
+    <motion.div
+      onClick={onClick}
+      onMouseMove={handleMouseMove}
+      variants={variants}
+      className={`${baseClasses} ${stateClasses} ${className}`}
+    >
+      {/* Light glow overlay following mouse */}
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              320px circle at ${mouseX}px ${mouseY}px,
+              ${glowColor} 0%,
+              ${secondaryGlowColor} 50%,
+              transparent 80%
+            )
+          `,
+        }}
+      />
+
+      {/* Glassmorphic border overlay following mouse */}
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              320px circle at ${mouseX}px ${mouseY}px,
+              ${borderGlowColor},
+              transparent 70%
+            )
+          `,
+          maskImage: "linear-gradient(black, black) exclude, linear-gradient(black, black)",
+          WebkitMaskImage: "linear-gradient(black, black) content-box, linear-gradient(black, black) border-box",
+          WebkitMaskComposite: "xor",
+          padding: "1px",
+        }}
+      />
+
+      <div className="relative z-20 h-full flex flex-col justify-between">
+        {children}
+      </div>
+    </motion.div>
+  );
+}
 
 const PERSPECTIVES = [
   {
@@ -39,6 +136,29 @@ const PERSPECTIVES = [
 
 export default function ValueProp() {
   const [activeTab, setActiveTab] = useState("devs");
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Autoplay loop every 6s on idle
+  useEffect(() => {
+    if (isPaused) return;
+
+    const timer = setInterval(() => {
+      setActiveTab((prev) => {
+        const currentIdx = PERSPECTIVES.findIndex((p) => p.id === prev);
+        const nextIdx = (currentIdx + 1) % PERSPECTIVES.length;
+        return PERSPECTIVES[nextIdx].id;
+      });
+    }, 6000);
+
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  // Capture phase events to halt autoplay permanently upon user interaction
+  const handleInteraction = () => {
+    if (!isPaused) {
+      setIsPaused(true);
+    }
+  };
 
   // Framer Motion spring physics configurations
   const containerVariants = {
@@ -66,7 +186,12 @@ export default function ValueProp() {
   };
 
   return (
-    <section id="value-prop" className="relative py-24 px-6 bg-black z-10 flex flex-col items-center">
+    <section 
+      id="value-prop" 
+      onClickCapture={handleInteraction}
+      onKeyDownCapture={handleInteraction}
+      className="relative py-24 px-6 bg-black z-10 flex flex-col items-center"
+    >
       {/* Background radial accent glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0 w-[500px] h-[500px] rounded-full bg-indigo-500/5 blur-[120px]" />
 
@@ -126,15 +251,13 @@ export default function ValueProp() {
           const isHighlighted = activeTab === perspective.id;
 
           return (
-            <motion.div
+            <ValuePropCard
               key={perspective.id}
               variants={cardVariants}
               onClick={() => setActiveTab(perspective.id)}
-              className={`group flex flex-col justify-between p-8 rounded-2xl border transition-all duration-500 cursor-pointer select-none ${
-                isHighlighted
-                  ? "bg-zinc-950 border-white/[0.12] shadow-2xl scale-[1.02]"
-                  : "bg-zinc-950/40 border-white/[0.04] hover:border-white/[0.08]"
-              }`}
+              isHighlighted={isHighlighted}
+              colorType={perspective.id as any}
+              className="p-8"
             >
               <div>
                 {/* Header */}
@@ -168,8 +291,8 @@ export default function ValueProp() {
               <div
                 className={`p-4 rounded-xl border relative overflow-hidden transition-all duration-500 ${
                   isHighlighted
-                    ? `bg-gradient-to-br ${perspective.color} border-white/[0.06]`
-                    : "bg-zinc-900/10 border-white/[0.02]"
+                    ? `bg-gradient-to-br ${perspective.color} border-white/[0.12]`
+                    : "bg-zinc-900/10 border-white/[0.08]"
                 }`}
               >
                 <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">
@@ -179,7 +302,7 @@ export default function ValueProp() {
                   {perspective.benefit}
                 </div>
               </div>
-            </motion.div>
+            </ValuePropCard>
           );
         })}
       </motion.div>

@@ -1,10 +1,23 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import MagneticButton from "./MagneticButton";
 
-export default function Header() {
+interface HeaderProps {
+  onOpenDemo: () => void;
+}
+
+export default function Header({ onOpenDemo }: HeaderProps) {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const navLinks = [
+    { label: "Features", href: "#features" },
+    { label: "Lifecycle", href: "#lifecycle" },
+    { label: "Command Center", href: "#architecture" },
+    { label: "Security ROI", href: "#value-prop" }
+  ];
+
   return (
     <motion.header
       initial={{ y: -50, opacity: 0 }}
@@ -40,21 +53,35 @@ export default function Header() {
       </a>
 
       {/* Navigation Options - Hidden on Mobile */}
-      <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-400">
-        <a href="#features" className="hover:text-white transition-colors">
-          Features
-        </a>
-        <a href="#value-prop" className="hover:text-white transition-colors">
-          Security ROI
-        </a>
-        <a href="#architecture" className="hover:text-white transition-colors">
-          Architecture
-        </a>
+      <nav 
+        className="hidden md:flex items-center gap-1 text-sm font-medium text-zinc-400 relative"
+        onMouseLeave={() => setHoveredIndex(null)}
+      >
+        {navLinks.map((link, idx) => (
+          <a
+            key={link.href}
+            href={link.href}
+            onMouseEnter={() => setHoveredIndex(idx)}
+            className="relative px-3 py-1.5 hover:text-white transition-colors duration-200 z-10"
+          >
+            {hoveredIndex === idx && (
+              <motion.div
+                layoutId="nav-hover-capsule"
+                className="absolute inset-0 bg-white/[0.06] rounded-full -z-10"
+                transition={{ type: "spring", stiffness: 350, damping: 26 }}
+              />
+            )}
+            {link.label}
+          </a>
+        ))}
       </nav>
 
       {/* Primary CTA */}
       <MagneticButton range={50} actionStrength={0.25}>
-        <button className="relative px-5 py-2 text-xs font-semibold text-black bg-white rounded-full transition-all hover:bg-zinc-100 hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] overflow-hidden group">
+        <button 
+          onClick={onOpenDemo}
+          className="relative px-5 py-2 text-xs font-semibold text-black bg-white rounded-full transition-all hover:bg-zinc-100 hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] overflow-hidden group cursor-pointer"
+        >
           <span className="relative z-10">Request Pilot</span>
           <span className="absolute inset-0 -translate-x-full group-hover:translate-x-0 bg-gradient-to-r from-cyan-400 to-indigo-500 opacity-[0.1] transition-transform duration-300" />
         </button>
