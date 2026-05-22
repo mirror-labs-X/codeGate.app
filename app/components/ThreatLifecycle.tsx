@@ -26,26 +26,23 @@ function IngestScrubSimulator() {
     const interval = setInterval(() => {
       setActiveLine((prev) => {
         const next = (prev + 1) % 4;
-        // Auto redact on scan
-        setRedacted((old) => {
-          const updated = [...old];
-          updated[prev] = true;
-          return updated;
-        });
+        if (next === 0) {
+          setRedacted([false, false, false, false]);
+        } else {
+          setRedacted((old) => {
+            const updated = [...old];
+            updated[prev] = true;
+            return updated;
+          });
+        }
         return next;
       });
     }, 1500);
 
-    // Reset loop periodically
-    const resetTimer = setTimeout(() => {
-      setRedacted([false, false, false, false]);
-    }, 7000);
-
     return () => {
       clearInterval(interval);
-      clearTimeout(resetTimer);
     };
-  }, [activeLine]);
+  }, []);
 
   const envLines = [
     { label: "DB_PASSWORD", value: '"super_secret_db_pass_2026"', secret: true },
@@ -123,30 +120,30 @@ function TokenBatchingSimulator() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (queueIndex < queue.length) {
-        const nextFile = queue[queueIndex];
-        setBatches((prev) => {
-          const next = [...prev];
-          // Put file into batch C or B
-          const targetBatch = next[2].files.length < 2 ? next[2] : next[1];
-          targetBatch.files.push(nextFile);
-          targetBatch.size += Math.floor(Math.random() * 1200) + 800;
-          return next;
-        });
-        setQueueIndex((prev) => prev + 1);
-      } else {
-        // Reset
-        setQueueIndex(0);
-        setBatches([
-          { id: "Batch A", files: ["auth.py", "session.py"], size: 4120 },
-          { id: "Batch B", files: ["utils.js", "helpers.js"], size: 3890 },
-          { id: "Batch C", files: [], size: 0 }
-        ]);
-      }
+      setQueueIndex((prev) => {
+        if (prev < queue.length) {
+          const nextFile = queue[prev];
+          setBatches((oldBatches) => {
+            const next = oldBatches.map((b) => ({ ...b, files: [...b.files] }));
+            const targetBatch = next[2].files.length < 2 ? next[2] : next[1];
+            targetBatch.files.push(nextFile);
+            targetBatch.size += Math.floor(Math.random() * 1200) + 800;
+            return next;
+          });
+          return prev + 1;
+        } else {
+          setBatches([
+            { id: "Batch A", files: ["auth.py", "session.py"], size: 4120 },
+            { id: "Batch B", files: ["utils.js", "helpers.js"], size: 3890 },
+            { id: "Batch C", files: [], size: 0 }
+          ]);
+          return 0;
+        }
+      });
     }, 1800);
 
     return () => clearInterval(interval);
-  }, [queueIndex, queue]);
+  }, [queue]);
 
   return (
     <div className="w-full h-full flex flex-col justify-between bg-zinc-950 p-6 font-mono text-[11px] text-zinc-300">
@@ -225,28 +222,38 @@ function ThreatContextSimulator() {
   const [results, setResults] = useState<{ cve: string; desc: string; score: number }[]>([]);
 
   useEffect(() => {
-    const timer1 = setTimeout(() => {
-      setSearchQuery("CVE dynamic execution taint eval");
-    }, 800);
+    let timer1: NodeJS.Timeout;
+    let timer2: NodeJS.Timeout;
+    let cycleInterval: NodeJS.Timeout;
 
-    const timer2 = setTimeout(() => {
-      setResults([
-        { cve: "CVE-2023-30551", desc: "Dynamic payload taint propagation to execution sinks", score: 0.98 },
-        { cve: "CVE-2024-21092", desc: "Command injection vulnerability via dynamic eval loading", score: 0.87 }
-      ]);
-    }, 2000);
+    const startCycle = () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
 
-    const resetTimer = setTimeout(() => {
       setSearchQuery("");
       setResults([]);
-    }, 7000);
+
+      timer1 = setTimeout(() => {
+        setSearchQuery("CVE dynamic execution taint eval");
+      }, 800);
+
+      timer2 = setTimeout(() => {
+        setResults([
+          { cve: "CVE-2023-30551", desc: "Dynamic payload taint propagation to execution sinks", score: 0.98 },
+          { cve: "CVE-2024-21092", desc: "Command injection vulnerability via dynamic eval loading", score: 0.87 }
+        ]);
+      }, 2000);
+    };
+
+    startCycle();
+    cycleInterval = setInterval(startCycle, 7000);
 
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
-      clearTimeout(resetTimer);
+      clearInterval(cycleInterval);
     };
-  }, [searchQuery]);
+  }, []);
 
   return (
     <div className="w-full h-full flex flex-col justify-between bg-zinc-950 p-6 font-mono text-[11px] text-zinc-300">
@@ -315,22 +322,30 @@ function SandboxTriageSimulator() {
   const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
-    const steps = SANDBOX_STEPS;
-
     let timer: NodeJS.Timeout;
-    if (currentStep < steps.length) {
-      timer = setTimeout(() => {
-        setLogs((prev) => [...prev, steps[currentStep]]);
-        setCurrentStep((prev) => prev + 1);
-      }, 1000);
-    } else {
-      timer = setTimeout(() => {
-        setLogs([]);
-        setCurrentStep(0);
-      }, 3000);
-    }
-    return () => clearTimeout(timer);
-  }, [currentStep]);
+
+    const runStep = (step: number) => {
+      if (step < SANDBOX_STEPS.length) {
+        timer = setTimeout(() => {
+          setLogs((prev) => [...prev, SANDBOX_STEPS[step]]);
+          setCurrentStep(step + 1);
+          runStep(step + 1);
+        }, 1000);
+      } else {
+        timer = setTimeout(() => {
+          setLogs([]);
+          setCurrentStep(0);
+          runStep(0);
+        }, 3000);
+      }
+    };
+
+    runStep(0);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <div className="w-full h-full flex flex-col justify-between bg-black p-6 font-mono text-[11px] text-zinc-300">

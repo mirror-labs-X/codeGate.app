@@ -15,6 +15,7 @@
   --font-mono: var(--font-mono);
   
   --animate-gradient-flow: gradient-flow 6s ease infinite;
+  --animate-marquee: marquee 30s linear infinite;
   
   @keyframes gradient-flow {
     0% {
@@ -25,6 +26,14 @@
     }
     100% {
       background-position: 0% 50%;
+    }
+  }
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
     }
   }
 }

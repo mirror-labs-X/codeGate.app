@@ -23,9 +23,9 @@ import {
 
 // Tab 0: Overview
 interface OverviewTabProps {
-  savings: number;
+  tokens: number;
 }
-function OverviewTab({ savings }: OverviewTabProps) {
+function OverviewTab({ tokens }: OverviewTabProps) {
   const [logs, setLogs] = useState<string[]>([
     "[scanner-go] Scanning package.json in payment-service...",
     "[brain-python] PII check: 0 matches found in env variables.",
@@ -55,78 +55,167 @@ function OverviewTab({ savings }: OverviewTabProps) {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-full">
-      {/* Cost Savings & Metrics Panel */}
-      <div className="md:col-span-2 flex flex-col justify-between bg-zinc-950 p-5 rounded-2xl border border-white/[0.08]">
-        <div>
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Compute Cost Savings</span>
-            <span className="text-[9px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">Active</span>
+    <div className="flex flex-col gap-3.5 h-full min-h-0 justify-between">
+      {/* Top row: 4 cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {/* Card 1: Tokens Scanned */}
+        <div className="bg-zinc-900/40 border border-white/[0.06] hover:border-cyan-500/30 p-3 rounded-xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden group">
+          <div className="flex justify-between items-start mb-1.5">
+            <span className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider block">Tokens Processed</span>
+            <Cpu size={14} className="text-cyan-400/80 group-hover:text-cyan-300" />
           </div>
-          <div className="text-3xl font-bold font-mono text-emerald-400">
-            ${savings.toFixed(2)}
+          <div>
+            <div className="text-base font-bold font-mono text-cyan-400 tracking-tight">
+              {tokens.toLocaleString()}
+            </div>
+            <span className="text-[8px] text-zinc-500 block leading-tight mt-0.5">Real-time LLM throughput</span>
           </div>
-          <span className="text-[10px] text-zinc-500 mt-1 block">Saved vs Pay-Per-Token LLM scanning API costs</span>
         </div>
 
-        {/* Mini SVG line area chart */}
-        <div className="mt-4 flex-1 min-h-[90px] relative">
-          <svg className="w-full h-full" viewBox="0 0 300 80" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="chart-glow" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="rgb(6, 182, 212)" stopOpacity="0.2"/>
-                <stop offset="100%" stopColor="rgb(6, 182, 212)" stopOpacity="0"/>
-              </linearGradient>
-            </defs>
-            <path
-              d="M0,70 Q40,30 80,60 T160,20 T240,50 T300,30 L300,80 L0,80 Z"
-              fill="url(#chart-glow)"
-            />
-            <path
-              d="M0,70 Q40,30 80,60 T160,20 T240,50 T300,30"
-              fill="none"
-              stroke="rgb(6, 182, 212)"
-              strokeWidth="2"
-            />
-            {/* Dots */}
-            <circle cx="80" cy="60" r="3" fill="rgb(6, 182, 212)" />
-            <circle cx="160" cy="20" r="3" fill="rgb(6, 182, 212)" />
-            <circle cx="240" cy="50" r="3" fill="rgb(6, 182, 212)" />
-          </svg>
-          <div className="absolute top-2 right-2 text-[9px] text-zinc-500 font-mono">Scan Freq: Constant</div>
+        {/* Card 2: Exploits Blocked */}
+        <div className="bg-zinc-900/40 border border-white/[0.06] hover:border-rose-500/30 p-3 rounded-xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden group">
+          <div className="flex justify-between items-start mb-1.5">
+            <span className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider block">Exploits Blocked</span>
+            <Shield size={14} className="text-rose-400/80 group-hover:text-rose-300" />
+          </div>
+          <div>
+            <div className="text-base font-bold font-mono text-rose-400 tracking-tight">
+              17
+            </div>
+            <span className="text-[8px] text-rose-500/80 font-bold block leading-tight mt-0.5">100% Deflection Rate</span>
+          </div>
+        </div>
+
+        {/* Card 3: PII Redacted */}
+        <div className="bg-zinc-900/40 border border-white/[0.06] hover:border-amber-500/30 p-3 rounded-xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden group">
+          <div className="flex justify-between items-start mb-1.5">
+            <span className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider block">PII Redacted</span>
+            <Sparkles size={14} className="text-amber-400/80 group-hover:text-amber-300" />
+          </div>
+          <div>
+            <div className="text-base font-bold font-mono text-amber-400 tracking-tight">
+              42
+            </div>
+            <span className="text-[8px] text-zinc-500 block leading-tight mt-0.5">Sensitive keys scrubbed</span>
+          </div>
+        </div>
+
+        {/* Card 4: Avg Latency */}
+        <div className="bg-zinc-900/40 border border-white/[0.06] hover:border-emerald-500/30 p-3 rounded-xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden group">
+          <div className="flex justify-between items-start mb-1.5">
+            <span className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider block">Proxy Overhead</span>
+            <Activity size={14} className="text-emerald-400/80 group-hover:text-emerald-300" />
+          </div>
+          <div>
+            <div className="text-base font-bold font-mono text-emerald-400 tracking-tight">
+              14.2ms
+            </div>
+            <span className="text-[8px] text-zinc-500 block leading-tight mt-0.5">Near-zero local latency</span>
+          </div>
         </div>
       </div>
 
-      {/* Logs and Quick stats */}
-      <div className="flex flex-col justify-between bg-zinc-950 p-5 rounded-2xl border border-white/[0.08]">
-        <div className="space-y-4">
-          <div className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Metrics</div>
-          <div className="grid grid-cols-1 gap-2">
-            <div className="bg-zinc-900/60 p-2.5 rounded-lg border border-white/[0.04] flex items-center justify-between">
-              <span className="text-[10px] text-zinc-500">Secured Commits</span>
-              <span className="text-sm font-bold text-white font-mono">248</span>
+      {/* Bottom row: Graph & Logs */}
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-3 flex-1 min-h-0">
+        {/* Redesigned Large Graph Section */}
+        <div className="md:col-span-3 bg-zinc-950 p-3.5 rounded-xl border border-white/[0.08] flex flex-col justify-between h-full min-h-0">
+          <div className="flex items-center justify-between mb-2">
+            <div>
+              <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider block">Traffic Optimization Telemetry</span>
+              <span className="text-[8px] text-zinc-600 block mt-0.5">Prompt token validation vs bypass volumes</span>
             </div>
-            <div className="bg-zinc-900/60 p-2.5 rounded-lg border border-white/[0.04] flex items-center justify-between">
-              <span className="text-[10px] text-zinc-500">PII Redacted</span>
-              <span className="text-sm font-bold text-white font-mono">42</span>
+            <div className="flex items-center gap-3 text-[8px] font-mono">
+              <div className="flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 inline-block" />
+                <span className="text-zinc-400">Total Requests</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
+                <span className="text-zinc-400">Sanitized</span>
+              </div>
             </div>
-            <div className="bg-zinc-900/60 p-2.5 rounded-lg border border-white/[0.04] flex items-center justify-between">
-              <span className="text-[10px] text-zinc-500">Exploits Blocked</span>
-              <span className="text-sm font-bold text-emerald-400 font-mono">17</span>
+          </div>
+
+          {/* SVG Area Chart Container */}
+          <div className="flex-1 min-h-0 w-full relative bg-zinc-900/10 border border-white/[0.02] rounded-lg p-1">
+            <svg className="w-full h-full" viewBox="0 0 400 120" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="total-glow" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="rgb(6, 182, 212)" stopOpacity="0.15"/>
+                  <stop offset="100%" stopColor="rgb(6, 182, 212)" stopOpacity="0"/>
+                </linearGradient>
+                <linearGradient id="sanitized-glow" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="rgb(16, 185, 129)" stopOpacity="0.15"/>
+                  <stop offset="100%" stopColor="rgb(16, 185, 129)" stopOpacity="0"/>
+                </linearGradient>
+              </defs>
+
+              {/* Grid Lines */}
+              <line x1="0" y1="30" x2="400" y2="30" stroke="rgba(255,255,255,0.03)" strokeWidth="1" />
+              <line x1="0" y1="60" x2="400" y2="60" stroke="rgba(255,255,255,0.03)" strokeWidth="1" />
+              <line x1="0" y1="90" x2="400" y2="90" stroke="rgba(255,255,255,0.03)" strokeWidth="1" />
+              <line x1="100" y1="0" x2="100" y2="120" stroke="rgba(255,255,255,0.03)" strokeWidth="1" />
+              <line x1="200" y1="0" x2="200" y2="120" stroke="rgba(255,255,255,0.03)" strokeWidth="1" />
+              <line x1="300" y1="0" x2="300" y2="120" stroke="rgba(255,255,255,0.03)" strokeWidth="1" />
+
+              {/* Total Request Fill & Line */}
+              <path
+                d="M0,100 C50,80 80,110 120,70 C160,30 200,90 240,40 C280,60 320,20 400,10 L400,120 L0,120 Z"
+                fill="url(#total-glow)"
+              />
+              <path
+                d="M0,100 C50,80 80,110 120,70 C160,30 200,90 240,40 C280,60 320,20 400,10"
+                fill="none"
+                stroke="rgb(6, 182, 212)"
+                strokeWidth="1.5"
+              />
+
+              {/* Sanitized Fill & Line */}
+              <path
+                d="M0,110 C50,95 80,115 120,85 C160,45 200,100 240,55 C280,75 320,35 400,25 L400,120 L0,120 Z"
+                fill="url(#sanitized-glow)"
+              />
+              <path
+                d="M0,110 C50,95 80,115 120,85 C160,45 200,100 240,55 C280,75 320,35 400,25"
+                fill="none"
+                stroke="rgb(16, 185, 129)"
+                strokeWidth="1.5"
+                strokeDasharray="3 3"
+              />
+
+              {/* Data points */}
+              <circle cx="120" cy="70" r="2.5" fill="rgb(6, 182, 212)" />
+              <circle cx="240" cy="40" r="2.5" fill="rgb(6, 182, 212)" />
+              <circle cx="320" cy="20" r="2.5" fill="rgb(6, 182, 212)" />
+
+              <circle cx="120" cy="85" r="2" fill="rgb(16, 185, 129)" />
+              <circle cx="240" cy="55" r="2" fill="rgb(16, 185, 129)" />
+            </svg>
+
+            {/* Float details indicator */}
+            <div className="absolute top-2 left-2 bg-black/60 border border-white/[0.04] backdrop-blur-sm rounded px-1.5 py-0.5 text-[7px] font-mono text-zinc-400">
+              Auto-Compaction: Enabled
             </div>
           </div>
         </div>
 
-        {/* Scroll logs */}
-        <div className="mt-4">
-          <div className="text-[9px] text-zinc-600 font-bold uppercase tracking-wider mb-2">Live Scanner Stream</div>
-          <div className="bg-black border border-white/[0.04] p-2.5 rounded-lg font-mono text-[9px] text-zinc-400 space-y-1.5 h-[65px] overflow-hidden">
-            {logs.map((log, idx) => (
-              <div key={idx} className="truncate text-zinc-400">
-                <span className="text-cyan-500 font-bold mr-1">&gt;</span>
-                {log}
-              </div>
-            ))}
+        {/* Live scanner stream / Logs terminal */}
+        <div className="md:col-span-2 bg-zinc-950 p-3.5 rounded-xl border border-white/[0.08] flex flex-col justify-between h-full min-h-0">
+          <div className="flex flex-col flex-1 min-h-0">
+            <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider block mb-1.5">Live Scanner Stream</span>
+            <div className="bg-black/80 border border-white/[0.04] p-2.5 rounded-lg font-mono text-[8px] text-zinc-400 space-y-1.5 flex-1 min-h-0 overflow-hidden flex flex-col justify-end">
+              {logs.map((log, idx) => (
+                <div key={idx} className="truncate text-zinc-400">
+                  <span className="text-cyan-500 font-bold mr-1">&gt;</span>
+                  {log}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="border-t border-white/[0.04] pt-2 mt-2 flex items-center justify-between text-[8px] text-zinc-500">
+            <span className="font-mono">INTEGRATION STATE: SECURED</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           </div>
         </div>
       </div>
@@ -592,7 +681,7 @@ interface FeatureCard {
 export default function DashboardShowcase() {
   const [activeTabIdx, setActiveTabIdx] = useState<number>(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [savings, setSavings] = useState(1280.45);
+  const [tokens, setTokens] = useState(12804500);
 
   const tabs = [
     { label: "Overview", icon: Activity, comp: OverviewTab },
@@ -633,10 +722,10 @@ export default function DashboardShowcase() {
     }
   ];
 
-  // Increment cost savings
+  // Increment tokens processed count
   useEffect(() => {
     const timer = setInterval(() => {
-      setSavings((prev) => prev + Math.random() * 0.13 + 0.02);
+      setTokens((prev) => prev + Math.floor(Math.random() * 3200) + 1800);
     }, 1500);
     return () => clearInterval(timer);
   }, []);
@@ -747,7 +836,7 @@ export default function DashboardShowcase() {
                 transition={{ duration: 0.25, ease: "easeOut" }}
                 className="h-full min-h-0 pb-1"
               >
-                <ActiveComponent savings={savings} />
+                <ActiveComponent tokens={tokens} />
               </motion.div>
             </AnimatePresence>
           </div>

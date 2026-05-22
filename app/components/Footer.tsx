@@ -32,7 +32,7 @@ export default function Footer({ onOpenDemo }: FooterProps) {
         {/* Magnetic CTA button */}
         <div className="mb-20">
           <MagneticButton range={60} actionStrength={0.35}>
-            <button 
+            <button
               onClick={onOpenDemo}
               className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-white text-black font-semibold text-sm transition-all hover:bg-zinc-100 hover:shadow-[0_0_30px_rgba(0,240,255,0.3)] cursor-pointer"
             >
@@ -43,22 +43,30 @@ export default function Footer({ onOpenDemo }: FooterProps) {
 
         {/* Bottom footer bar */}
         <div className="w-full pt-10 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 font-medium tracking-wide">
-          <div className="flex items-center gap-2">
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-zinc-500"
-            >
-              <path d="M12 2L3 7v9c0 5.5 4.5 10 9 11 4.5-1 9-5.5 9-11V7l-9-5z" />
-            </svg>
-            <span>CodeGate</span>
-          </div>
+          <a href="#" className="flex items-center gap-2 group cursor-pointer">
+            <div className="relative flex items-center justify-center w-7 h-7 rounded-lg bg-zinc-950 border border-white/[0.08] overflow-hidden transition-all duration-300 group-hover:border-cyan-500/30 group-hover:shadow-[0_0_12px_rgba(6,182,212,0.15)]">
+              {/* Subtle hover gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-zinc-500 group-hover:text-cyan-400 transition-colors duration-300"
+              >
+                <path d="M12 2L3 7v9c0 5.5 4.5 10 9 11 4.5-1 9-5.5 9-11V7l-9-5z" />
+                <path d="M12 17v-6" />
+                <path d="M9 11h6" />
+              </svg>
+            </div>
+            <span className="text-xs font-semibold tracking-tight text-zinc-500 group-hover:text-zinc-300 transition-colors duration-300">
+              Code<span className="text-zinc-600 group-hover:text-cyan-400 transition-colors duration-300">Gate</span>
+            </span>
+          </a>
 
           <div className="flex items-center gap-6">
             <a href="#" className="hover:text-zinc-300 transition-colors">

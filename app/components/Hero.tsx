@@ -53,6 +53,23 @@ const SIMULATION_STEPS = [
   },
 ];
 
+const INTEGRATIONS = [
+  { name: "VS Code", type: "IDE" },
+  { name: "JetBrains", type: "IDE" },
+  { name: "Cursor", type: "IDE" },
+  { name: "GitHub Copilot", type: "AI Client" },
+  { name: "Continue.dev", type: "AI Client" },
+  { name: "Cline", type: "AI Client" },
+  { name: "Aider", type: "AI Client" },
+  { name: "Ollama", type: "LLM Engine" },
+  { name: "vLLM", type: "LLM Engine" },
+  { name: "OpenAI", type: "LLM Engine" },
+  { name: "Anthropic", type: "LLM Engine" },
+  { name: "Gemini", type: "LLM Engine" },
+  { name: "GitHub Enterprise", type: "CI/CD" },
+  { name: "GitLab", type: "CI/CD" },
+];
+
 const STEP_CODE_DETAILS = {
   ingest: {
     fileName: "config/.env",
@@ -244,7 +261,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
         >
           Agile Security.{" "}
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-indigo-400 to-cyan-400 bg-[length:200%_auto] animate-gradient-flow font-bold">
-            Autonomous AI.
+            Flat-Rate Scaling.
           </span>{" "}
           Absolute Data Sovereignty.
         </motion.h1>
@@ -256,7 +273,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
           transition={{ type: "spring", stiffness: 90, damping: 14, delay: 0.1 }}
           className="text-base sm:text-lg text-zinc-400 font-normal leading-relaxed max-w-2xl mb-8 tracking-wide"
         >
-          CodeGate is the Agentic AI platform that actively hunts for zero-day threats in your codebase—without slowing down developers or exposing your proprietary data.
+          CodeGate is the self-hosted Agentic AI platform that actively hunts for zero-day threats inside your firewall. By running locally, it eliminates the non-linear token growth costs of periodic repository scanning while keeping your proprietary code 100% sovereign.
         </motion.p>
 
         {/* Action CTAs */}
@@ -285,14 +302,37 @@ export default function Hero({ onOpenDemo }: HeroProps) {
           </MagneticButton>
         </motion.div>
 
-        {/* Trust Bar */}
+        {/* Integrations/Ecosystem Marquee */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 0.5 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 1.5, delay: 0.4 }}
-          className="text-xs text-zinc-500 font-medium tracking-widest uppercase mb-16"
+          className="w-full max-w-4xl overflow-hidden py-4.5 relative mb-16 border-y border-white/[0.04] bg-zinc-950/20"
         >
-          Engineered for modern enterprises requiring strict compliance
+          {/* Left & Right gradient masks for smooth fade */}
+          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-black via-black/80 to-transparent z-10 pointer-events-none" />
+
+          <div className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest text-center mb-4">
+            Securing integrations across your developer stack
+          </div>
+
+          <div className="flex w-max gap-6 animate-marquee select-none">
+            {[...INTEGRATIONS, ...INTEGRATIONS].map((item, idx) => (
+              <div
+                key={idx}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/30 border border-white/[0.05] hover:border-cyan-500/25 transition-colors duration-300 group"
+              >
+                <span className={`w-1.5 h-1.5 rounded-full ${
+                  item.type === "IDE" ? "bg-cyan-400" :
+                  item.type === "AI Client" ? "bg-indigo-400" :
+                  item.type === "LLM Engine" ? "bg-emerald-400" : "bg-pink-400"
+                }`} />
+                <span className="text-[11px] font-semibold text-zinc-300 font-mono tracking-tight">{item.name}</span>
+                <span className="text-[8px] text-zinc-600 uppercase font-bold tracking-widest group-hover:text-zinc-500 transition-colors">{item.type}</span>
+              </div>
+            ))}
+          </div>
         </motion.div>
 
         {/* The Live Sandbox Simulator */}
