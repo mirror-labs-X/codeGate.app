@@ -16,7 +16,8 @@ import {
   Server,
   Shield,
   GitBranch,
-  Cpu
+  Cpu,
+  Database
 } from "lucide-react";
 
 // --- Tab Sub-Components ---
@@ -28,8 +29,8 @@ interface OverviewTabProps {
 function OverviewTab({ tokens }: OverviewTabProps) {
   const [logs, setLogs] = useState<string[]>([
     "[scanner-go] Scanning package.json in payment-service...",
-    "[brain-python] PII check: 0 matches found in env variables.",
-    "[sandbox-python] Running validation suite on payment-service payload..."
+    "[scanner-go] Secret Redacted: STRIPE_API_KEY removed from input.",
+    "[sandbox-python] Running validation: Exploit verified inside isolated container."
   ]);
 
   const logIndex = useRef(0);
@@ -37,11 +38,11 @@ function OverviewTab({ tokens }: OverviewTabProps) {
   useEffect(() => {
     const pool = [
       "[scanner-go] Commencing scanning on api-gateway...",
-      "[brain-python] Injecting local vector context (CVE-2023-30551).",
-      "[sandbox-python] isolated run: verified 0 executables in auth-server.",
+      "[brain-python] Matching local security database...",
+      "[sandbox-python] Running validation: Exploit verified inside isolated container.",
       "[scanner-go] Scanner complete: codebase 100% compliant.",
-      "[brain-python] Scrubbed sensitive API key string from auth.go.",
-      "[sandbox-python] sandbox triage validated: 0 alert failures."
+      "[scanner-go] Scrubbed sensitive API key string from auth.go.",
+      "[sandbox-python] Sandbox validation: 0 alert failures in main-service."
     ];
 
     const interval = setInterval(() => {
@@ -284,7 +285,7 @@ function RulesTab() {
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="text-xs text-zinc-300">Sandbox Triage <span className="text-[8px] text-cyan-400 ml-1 uppercase font-bold bg-cyan-500/10 px-1 py-0.2 rounded">Preview</span></span>
+            <span className="text-xs text-zinc-300">Sandbox Triage</span>
             <button
               onClick={() => setToggles((t) => ({ ...t, sandbox: !t.sandbox }))}
               className={`w-8 h-4 rounded-full transition-colors relative flex items-center ${toggles.sandbox ? "bg-cyan-500" : "bg-zinc-800"}`}
@@ -555,19 +556,20 @@ function OrchestrationTab() {
     const interval = setInterval(() => {
       setFlowProgress((prev) => {
         const next = prev + 1;
-        return next > 4 ? 0 : next;
+        return next > 5 ? 0 : next;
       });
     }, 2000);
     return () => clearInterval(interval);
   }, []);
 
   const nodes = [
-    { id: "ide", label: "Local IDE", sub: "VS Code / JetBrains", icon: Monitor, x: 10, y: 50 },
-    { id: "proxy", label: "CodeGate Proxy", sub: "Localhost:50051", icon: Shield, x: 30, y: 50 },
-    { id: "sandbox", label: "Docker Sandbox", sub: "Isolated Triage", icon: Server, x: 50, y: 30 },
-    { id: "rag", label: "On-Prem RAG DB", sub: "ChromaDB Vector Store", icon: FolderGit2, x: 50, y: 70 },
-    { id: "llm", label: "Local LLM Engine", sub: "Private Inference", icon: Cpu, x: 75, y: 50 },
-    { id: "patch", label: "Secure Patch", sub: "Auto PR Generation", icon: GitBranch, x: 92, y: 50 },
+    { id: "ide", label: "Developer IDE", sub: "VS Code / Cursor", icon: Monitor, x: 8, y: 50 },
+    { id: "orchestrator", label: "Orchestrator (Go)", sub: "API Gateway Proxy", icon: Shield, x: 22, y: 50 },
+    { id: "scanner", label: "Scanner (Go)", sub: "PII & Secret Redactor", icon: FolderGit2, x: 36, y: 50 },
+    { id: "brain", label: "Brain (Python)", sub: "AI Threat Analyst", icon: Cpu, x: 50, y: 50 },
+    { id: "sandbox", label: "Sandbox (Python)", sub: "Docker Exploit Validator", icon: Server, x: 64, y: 50 },
+    { id: "intelligence", label: "Intelligence (Python)", sub: "Local Threat Database", icon: Database, x: 78, y: 50 },
+    { id: "patch", label: "Secure Patch", sub: "1-Click Git PR (Preview)", icon: GitBranch, x: 92, y: 50 },
   ];
 
   return (
@@ -591,15 +593,10 @@ function OrchestrationTab() {
           </defs>
 
           {/* Static connection paths */}
-          <path d="M100,100 L280,100" stroke="rgb(39,39,42)" strokeWidth="2" fill="none" />
-          <path d="M280,100 L480,60" stroke="rgb(39,39,42)" strokeWidth="2" fill="none" />
-          <path d="M280,100 L480,140" stroke="rgb(39,39,42)" strokeWidth="2" fill="none" />
-          <path d="M480,60 L720,100" stroke="rgb(39,39,42)" strokeWidth="2" fill="none" />
-          <path d="M480,140 L720,100" stroke="rgb(39,39,42)" strokeWidth="2" fill="none" />
-          <path d="M720,100 L900,100" stroke="rgb(39,39,42)" strokeWidth="2" fill="none" />
+          <path d="M80,100 L920,100" stroke="rgb(39,39,42)" strokeWidth="2" fill="none" />
 
           {/* Animated flow pulse */}
-          {flowProgress < 5 && (
+          {flowProgress < 6 && (
             <motion.circle
               r="5"
               fill="rgb(6,182,212)"
@@ -611,10 +608,12 @@ function OrchestrationTab() {
                 dur="2s"
                 repeatCount="indefinite"
                 path={
-                  flowProgress === 0 ? "M100,100 L280,100" :
-                  flowProgress === 1 ? "M280,100 L480,60" :
-                  flowProgress === 2 ? "M480,60 L720,100" :
-                  flowProgress === 3 ? "M720,100 L900,100" : ""
+                  flowProgress === 0 ? "M80,100 L220,100" :
+                  flowProgress === 1 ? "M220,100 L360,100" :
+                  flowProgress === 2 ? "M360,100 L500,100" :
+                  flowProgress === 3 ? "M500,100 L640,100" :
+                  flowProgress === 4 ? "M640,100 L780,100" :
+                  flowProgress === 5 ? "M780,100 L920,100" : ""
                 }
               />
             </motion.circle>

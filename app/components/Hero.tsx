@@ -26,8 +26,8 @@ const SIMULATION_STEPS = [
   },
   {
     status: "retrieve",
-    message: "Semantic Vector RAG Threat Context Fetch...",
-    subtext: "Querying ChromaDB local database for matching CVE advisories...",
+    message: "Local Threat Context Retrieval...",
+    subtext: "Matching detected anomalies against local security intelligence database...",
     icon: Database,
     iconColor: "text-cyan-400",
     glowColor: "rgba(6, 182, 212, 0.15)",
@@ -35,8 +35,8 @@ const SIMULATION_STEPS = [
   },
   {
     status: "triage",
-    message: "Isolated Docker Sandbox Exploit Verification (Preview)...",
-    subtext: "Running taint trace execution in locked-down Python container...",
+    message: "Automated Sandbox Exploit Verification...",
+    subtext: "Executing unsafe code inside isolated Docker container to verify threats...",
     icon: Terminal,
     iconColor: "text-rose-400",
     glowColor: "rgba(244, 63, 94, 0.15)",
@@ -44,8 +44,8 @@ const SIMULATION_STEPS = [
   },
   {
     status: "remediate",
-    message: "Sovereign Pull Request Remediation (Coming Soon)...",
-    subtext: "Generating zero-day secure Git patch diff and Merging PR...",
+    message: "Sovereign Pull Request Remediation (Preview)...",
+    subtext: "Generating secure Git patches and automated pull requests...",
     icon: GitPullRequest,
     iconColor: "text-emerald-400",
     glowColor: "rgba(16, 185, 129, 0.15)",
@@ -54,20 +54,37 @@ const SIMULATION_STEPS = [
 ];
 
 const INTEGRATIONS = [
-  { name: "VS Code", type: "IDE" },
-  { name: "JetBrains", type: "IDE" },
-  { name: "Cursor", type: "IDE" },
+  // IDEs and Developer Clients
+  { name: "VS Code", type: "IDE Proxy" },
+  { name: "JetBrains", type: "IDE Proxy" },
+  { name: "Cursor", type: "IDE Proxy" },
   { name: "GitHub Copilot", type: "AI Client" },
   { name: "Continue.dev", type: "AI Client" },
   { name: "Cline", type: "AI Client" },
   { name: "Aider", type: "AI Client" },
+
+  // Issue Trackers and Ticketing
+  { name: "GitHub Issues", type: "Ticketing" },
+  { name: "Jira Software", type: "Ticketing" },
+
+  // Identity and Auth Providers (SSO)
+  { name: "Google SSO", type: "Identity" },
+  { name: "Microsoft SSO", type: "Identity" },
+
+  // LLM Engines and Inference
+  { name: "Qwen3-Coder", type: "Private LLM" },
   { name: "Ollama", type: "LLM Engine" },
   { name: "vLLM", type: "LLM Engine" },
   { name: "OpenAI", type: "LLM Engine" },
   { name: "Anthropic", type: "LLM Engine" },
   { name: "Gemini", type: "LLM Engine" },
-  { name: "GitHub Enterprise", type: "CI/CD" },
-  { name: "GitLab", type: "CI/CD" },
+
+  // Data and Logging Stack
+  { name: "Grafana Loki", type: "Logging" },
+  { name: "Promtail", type: "Log Shipping" },
+  { name: "ChromaDB", type: "Vector Store" },
+  { name: "PostgreSQL", type: "Database" },
+  { name: "Redis", type: "Message Broker" },
 ];
 
 const STEP_CODE_DETAILS = {
@@ -134,18 +151,18 @@ const STEP_CODE_DETAILS = {
         exit={{ opacity: 0 }}
         className="space-y-1 text-zinc-300"
       >
-        {"1: # Query ChromaDB local database for matching CVEs\n"}
-        {"2: query = \"eval() code execution exploit pattern\"\n"}
-        {"3: results = chroma_db.similarity_search(query)\n"}
+        {"1: # Querying offline security intelligence database\n"}
+        {"2: query = \"remote code execution exploit path\"\n"}
+        {"3: results = local_db.similarity_search(query)\n"}
         {"4:\n"}
         <div className="bg-cyan-950/20 text-cyan-400 border-l-2 border-cyan-500 pl-2 py-0.5 my-1 inline-block w-full">
-          {"5: # Matching CVE Advisories retrieved:\n"}
-          {"6: # - CVE-2023-30551 (eval injection) - Confidence: 94.2%\n"}
-          {"7: # - CVE-2022-29881 (unvalidated input) - Confidence: 81.5%\n"}
+          {"5: # Threat profile matched:\n"}
+          {"6: # - CVE-2023-30551 (eval injection) - Match: 94%\n"}
+          {"7: # - CVE-2022-29881 (command injection) - Match: 81%\n"}
         </div>
       </motion.div>
     ),
-    badge: "3 CVE Matches Retrieved",
+    badge: "Local Matches Found",
     badgeStyles: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
   },
   triage: {
@@ -170,8 +187,8 @@ const STEP_CODE_DETAILS = {
         </div>
       </motion.div>
     ),
-    badge: "Exploit Verified (Preview)",
-    badgeStyles: "bg-rose-500/10 text-rose-400 border-rose-500/20 animate-pulse",
+    badge: "Exploit Verified",
+    badgeStyles: "bg-rose-500/10 text-rose-400 border-rose-500/20",
   },
   remediate: {
     fileName: "src/auth/client_session.py",
@@ -198,8 +215,8 @@ const STEP_CODE_DETAILS = {
         {"7:     return config\n"}
       </motion.div>
     ),
-    badge: "Patched & Sovereign",
-    badgeStyles: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    badge: "Preview Patch",
+    badgeStyles: "bg-amber-500/10 text-amber-400 border-amber-500/20",
   },
 };
 
@@ -273,7 +290,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
           transition={{ type: "spring", stiffness: 90, damping: 14, delay: 0.1 }}
           className="text-base sm:text-lg text-zinc-400 font-normal leading-relaxed max-w-2xl mb-8 tracking-wide"
         >
-          CodeGate is the self-hosted Agentic AI platform that actively hunts for zero-day threats inside your firewall. By running locally, it eliminates the non-linear token growth costs of periodic repository scanning while keeping your proprietary code 100% sovereign.
+          CodeGate is the Agentic AI platform that actively hunts for zero-day threats in your codebase—without slowing down developers or exposing your proprietary data. By running locally within your perimeter, it eliminates the non-linear token growth costs of periodic repository scanning.
         </motion.p>
 
         {/* Action CTAs */}
@@ -324,9 +341,13 @@ export default function Hero({ onOpenDemo }: HeroProps) {
                 className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/30 border border-white/[0.05] hover:border-cyan-500/25 transition-colors duration-300 group"
               >
                 <span className={`w-1.5 h-1.5 rounded-full ${
-                  item.type === "IDE" ? "bg-cyan-400" :
-                  item.type === "AI Client" ? "bg-indigo-400" :
-                  item.type === "LLM Engine" ? "bg-emerald-400" : "bg-pink-400"
+                  item.type.includes("IDE") ? "bg-cyan-400" :
+                  item.type.includes("AI Client") ? "bg-indigo-400" :
+                  item.type.includes("LLM") || item.type.includes("Private") ? "bg-emerald-400" :
+                  item.type.includes("Ticketing") ? "bg-pink-400" :
+                  item.type.includes("Identity") ? "bg-amber-400" :
+                  item.type.includes("Log") || item.type.includes("Logging") ? "bg-sky-400" :
+                  "bg-purple-400"
                 }`} />
                 <span className="text-[11px] font-semibold text-zinc-300 font-mono tracking-tight">{item.name}</span>
                 <span className="text-[8px] text-zinc-600 uppercase font-bold tracking-widest group-hover:text-zinc-500 transition-colors">{item.type}</span>

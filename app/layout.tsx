@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "CodeGate | Autonomous Enterprise AI Security & Zero-Day Threat Hunting",
   description:
-    "CodeGate is the sovereign agentic AI platform that actively hunts for zero-day threats in your codebase—without slowing down developers or exposing proprietary data.",
+    "CodeGate is the Agentic AI platform that actively hunts for zero-day threats in your codebase—without slowing down developers or exposing your proprietary data.",
 };
 
 export default function RootLayout({

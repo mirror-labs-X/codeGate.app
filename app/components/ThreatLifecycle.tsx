@@ -261,16 +261,16 @@ function ThreatContextSimulator() {
         <div className="flex items-center justify-between border-b border-white/[0.08] pb-3 mb-4">
           <div className="flex items-center gap-2">
             <Database size={14} className="text-cyan-400" />
-            <span className="text-zinc-400 font-bold uppercase tracking-wider text-[10px]">ChromaDB Threat RAG Search</span>
+            <span className="text-zinc-400 font-bold uppercase tracking-wider text-[10px]">Local Threat Intelligence Search</span>
           </div>
-          <span className="text-[9px] text-indigo-400 font-bold uppercase bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded">RAG ENRICHMENT</span>
+          <span className="text-[9px] text-indigo-400 font-bold uppercase bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded">LOCAL RETRIEVAL</span>
         </div>
 
         {/* Search bar simulation */}
         <div className="w-full bg-zinc-900 border border-white/[0.08] rounded-lg p-2 flex items-center gap-2 mb-4">
           <Search size={12} className="text-zinc-500" />
           <span className="text-zinc-200">
-            {searchQuery || <span className="text-zinc-600 italic">Querying vector embeddings...</span>}
+            {searchQuery || <span className="text-zinc-600 italic">Querying local threat database...</span>}
           </span>
           <span className="w-1 h-3.5 bg-cyan-400 animate-pulse" />
         </div>
@@ -353,9 +353,9 @@ function SandboxTriageSimulator() {
         <div className="flex items-center justify-between border-b border-white/[0.08] pb-3 mb-4">
           <div className="flex items-center gap-2">
             <Terminal size={14} className="text-rose-400" />
-            <span className="text-zinc-400 font-bold uppercase tracking-wider text-[10px]">Isolated Triage Sandbox</span>
+            <span className="text-zinc-400 font-bold uppercase tracking-wider text-[10px]">Active Validation Sandbox</span>
           </div>
-          <span className="text-[9px] text-rose-400 font-bold uppercase bg-rose-500/10 border border-rose-500/20 px-2 py-0.5 rounded animate-pulse">PREVIEW MODE</span>
+          <span className="text-[9px] text-emerald-400 font-bold uppercase bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded">ACTIVE SERVICE</span>
         </div>
 
         <div className="space-y-1.5 max-h-[160px] overflow-y-auto">
@@ -385,7 +385,7 @@ function SandboxTriageSimulator() {
       </div>
 
       <div className="mt-4 pt-3 border-t border-white/[0.04] text-[9px] text-zinc-500 flex justify-between">
-        <span>SANDBOX INTEGRATION: PREVIEW</span>
+        <span>SANDBOX STATUS: ACTIVE</span>
         <span>CLEANUP STATE: PRISTINE</span>
       </div>
     </div>
@@ -422,7 +422,7 @@ function RemediationSimulator() {
             <GitPullRequest size={14} className="text-purple-400" />
             <span className="text-zinc-400 font-bold uppercase tracking-wider text-[10px]">Sovereign Git patch diff</span>
           </div>
-          <span className="text-[9px] text-purple-400 font-bold uppercase bg-purple-500/10 border border-purple-500/20 px-2 py-0.5 rounded">UPCOMING</span>
+          <span className="text-[9px] text-amber-400 font-bold uppercase bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded">PREVIEW MODE</span>
         </div>
 
         {/* Diff mock */}
@@ -518,34 +518,33 @@ const steps: Step[] = [
   {
     id: 3,
     badge: "03 . RETRIEVE",
-    title: "Context-Aware Security Intelligence",
-    subtitle: "Enriching scan analysis with vector searches for CVE advisories.",
-    description: "Before applying reasoning models, CodeGate runs local vector embeddings queries against security databases, appending relevant CVE indexes and security rules directly to the threat analysis prompt.",
+    title: "Smart Context Retrieval",
+    subtitle: "Matching threat patterns against local security knowledge bases.",
+    description: "Instead of sending raw code to external APIs, CodeGate retrieves CVE records and threat profiles locally to enrich the AI's understanding, resulting in highly accurate threat detection.",
     icon: Database,
     simulator: ThreatContextSimulator,
     bulletPoints: [
-      "Semantic Context Lookup: Hybrid searches extract vulnerabilities context.",
-      "CVE Advisories Database: Matches patterns to local database definitions.",
-      "Automated Prompt RAG: Local system rules enrich pipeline reasoning."
+      "Smart Search: Instantly matches code pattern anomalies against global security intelligence.",
+      "Local Database: Offline repository of vulnerability profiles keeps scans private and fast."
     ]
   },
   {
     id: 4,
-    badge: "04 . TRIAGE (PREVIEW)",
-    title: "True Exploit Verification Sandbox",
-    subtitle: "Eliminating alert noise by simulating execution paths in containers.",
-    description: "Static code alerts trigger massive false positive fatigue. In preview, CodeGate executes triaged packages inside secure on-premise Docker sandboxes to confirm if vulnerabilities are actually executable.",
+    badge: "04 . TRIAGE",
+    title: "Automated Sandbox Verification",
+    subtitle: "Proving vulnerability exploitability in isolated containers.",
+    description: "Traditional scanners generate thousands of false alarms, causing alert fatigue. CodeGate runs code snippets inside a secure, isolated sandbox to confirm if they are actually exploitable before alerting developers.",
     icon: Terminal,
     simulator: SandboxTriageSimulator,
     bulletPoints: [
-      "Zero Alert Fatigue: CodeGate validates threat exploitability directly.",
-      "Isolated Shell Containment: Virtual sandboxes isolate unsafe code runs.",
-      "Execution Trace Logs: Logs taint propagation paths from input source to sinks."
+      "Zero False Positives: CodeGate verifies exploitability, filtering out harmless alerts.",
+      "Secure Isolation: Safely executes and tests code inside locked-down sandboxes.",
+      "Actionable Diagnostics: Delivers clear execution logs showing exactly how the exploit behaves."
     ]
   },
   {
     id: 5,
-    badge: "05 . REMEDIATE (COMING SOON)",
+    badge: "05 . REMEDIATE (PREVIEW)",
     title: "Automated Patch Delivery",
     subtitle: "IDE and Git workflow integrations for secure, fast code fixes.",
     description: "Once verified, CodeGate designs a Git diff patch replacing vulnerable constructs. Developers can review the parameterized query modifications and apply a secure pull request in a single click.",

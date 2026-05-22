@@ -148,15 +148,15 @@ export default function BentoGrid() {
               <div className="p-2 w-fit rounded-lg bg-indigo-950/40 border border-indigo-500/20 text-indigo-400">
                 <Brain size={20} />
               </div>
-              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                Preview
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                Active
               </span>
             </div>
             <h3 className="text-xl font-semibold text-zinc-100 tracking-tight mb-2">
               Exploit Verification
             </h3>
             <p className="text-sm text-zinc-400 leading-relaxed font-normal">
-              Instead of overwhelming your engineering team with thousands of false positives, CodeGate is designed to run sandboxed verification (planned via codegate-sandbox integration) to prove whether a vulnerability can actually be exploited.
+              Stop wasting developer hours on false positives. CodeGate's active validation sandbox runs and verifies threat alerts automatically, ensuring your team only spends time fixing real, confirmed risks.
             </p>
           </div>
 
@@ -250,7 +250,7 @@ export default function BentoGrid() {
               Private Model Tuning
             </h3>
             <p className="text-sm text-zinc-400 leading-relaxed font-normal">
-              Fine-tune custom security models (like Qwen3-Coder) on your own secure on-premises compute. Keep your proprietary code logic, APIs, and custom rules completely private.
+              Secure Custom Models. Train and run security models (like Qwen-30B) on your own secure infrastructure. Keep your codebase, proprietary APIs, and intellectual property entirely private within your firewall.
             </p>
           </div>
 
@@ -262,7 +262,7 @@ export default function BentoGrid() {
             </div>
             <div className="flex justify-between text-zinc-400">
               <span>Model Base</span>
-              <span className="text-zinc-500">Qwen3-Coder-30B-Instruct</span>
+              <span className="text-zinc-500">Qwen3-Coder-30B-A3B-Instruct</span>
             </div>
             <div className="space-y-1.5">
               <div className="flex justify-between text-zinc-400">
