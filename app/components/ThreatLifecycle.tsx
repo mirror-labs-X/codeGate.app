@@ -561,12 +561,13 @@ const steps: Step[] = [
 export default function ThreatLifecycle() {
   const [activeStepId, setActiveStepId] = useState<number>(1);
   const [isPaused, setIsPaused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const activeStep = steps.find((s) => s.id === activeStepId) || steps[0];
   const ActiveSimulator = activeStep.simulator;
 
   // Autoplay loop every 16s on idle
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || isHovered) return;
 
     const timer = setInterval(() => {
       setActiveStepId((prev) => {
@@ -576,7 +577,7 @@ export default function ThreatLifecycle() {
     }, 16000);
 
     return () => clearInterval(timer);
-  }, [isPaused]);
+  }, [isPaused, isHovered]);
 
   // Capture phase events to halt autoplay permanently upon user interaction
   const handleInteraction = () => {
@@ -611,7 +612,11 @@ export default function ThreatLifecycle() {
         </div>
 
         {/* Layout grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           {/* Left Column: Interactive Steps List */}
           <div className="lg:col-span-5 space-y-4">
             {steps.map((step) => {
@@ -622,10 +627,10 @@ export default function ThreatLifecycle() {
                 <button
                   key={step.id}
                   onClick={() => setActiveStepId(step.id)}
-                  className={`group w-full text-left p-6 rounded-2xl border transition-all duration-300 flex items-start gap-4 cursor-pointer relative overflow-hidden active:scale-[0.97] transition-transform duration-150 ${
+                  className={`group w-full text-left p-6 rounded-2xl border transition-all duration-300 flex items-start gap-4 cursor-pointer relative overflow-hidden active:scale-[0.97] ${
                     isActive
-                      ? "border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.05)] bg-zinc-950/60 scale-[1.02]"
-                      : "border-white/[0.08] bg-zinc-950/20 hover:bg-zinc-900/40 hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(6,182,212,0.06)] hover:scale-[1.02]"
+                      ? "z-10 border-cyan-500/40 shadow-[0_0_20px_rgba(6,182,212,0.08)] bg-zinc-950/60 scale-[1.02] hover:scale-[1.04] hover:border-cyan-500/60"
+                      : "z-0 hover:z-20 border-white/[0.08] bg-zinc-950/20 hover:bg-zinc-900/40 hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(6,182,212,0.06)] hover:scale-[1.04]"
                   }`}
                 >
                   {/* Shared backdrop selection capsule */}
