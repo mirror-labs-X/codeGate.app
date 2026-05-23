@@ -279,7 +279,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
           className="text-4xl sm:text-6xl font-semibold tracking-tight text-white max-w-5xl leading-[1.1] mb-6"
         >
           Agile Security.{" "}
-          <span className="text-cyan-400 font-bold">
+          <span className="bg-gradient-to-r from-cyan-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent bg-[size:200%_auto] animate-gradient-flow font-bold">
             Flat-Rate Scaling.
           </span>{" "}
           Absolute Data Sovereignty.
