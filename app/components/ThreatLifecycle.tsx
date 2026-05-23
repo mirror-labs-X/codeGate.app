@@ -564,7 +564,7 @@ export default function ThreatLifecycle() {
   const activeStep = steps.find((s) => s.id === activeStepId) || steps[0];
   const ActiveSimulator = activeStep.simulator;
 
-  // Autoplay loop every 10s on idle
+  // Autoplay loop every 16s on idle
   useEffect(() => {
     if (isPaused) return;
 
@@ -573,7 +573,7 @@ export default function ThreatLifecycle() {
         const next = prev + 1;
         return next > steps.length ? 1 : next;
       });
-    }, 10000);
+    }, 16000);
 
     return () => clearInterval(timer);
   }, [isPaused]);
