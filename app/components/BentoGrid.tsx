@@ -89,7 +89,7 @@ export default function BentoGrid() {
           The Threat-Informed Analyst
         </div>
         <h2 className="text-3xl sm:text-5xl font-semibold tracking-tight text-white">
-          Meet CodeGate.
+          Meet Code<span className="text-cyan-400">Gate</span>
         </h2>
       </div>
 
