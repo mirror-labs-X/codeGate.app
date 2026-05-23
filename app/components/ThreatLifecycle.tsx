@@ -612,11 +612,7 @@ export default function ThreatLifecycle() {
         </div>
 
         {/* Layout grid */}
-        <div
-          className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Left Column: Interactive Steps List */}
           <div className="lg:col-span-5 space-y-4">
             {steps.map((step) => {
@@ -627,10 +623,12 @@ export default function ThreatLifecycle() {
                 <button
                   key={step.id}
                   onClick={() => setActiveStepId(step.id)}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
                   className={`group w-full text-left p-6 rounded-2xl border transition-all duration-300 flex items-start gap-4 cursor-pointer relative overflow-hidden active:scale-[0.97] ${
                     isActive
-                      ? "z-10 border-cyan-500/40 shadow-[0_0_20px_rgba(6,182,212,0.08)] bg-zinc-950/60 scale-[1.02] hover:scale-[1.04] hover:border-cyan-500/60"
-                      : "z-0 hover:z-20 border-white/[0.08] bg-zinc-950/20 hover:bg-zinc-900/40 hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(6,182,212,0.06)] hover:scale-[1.04]"
+                      ? "z-10 border-cyan-500/40 shadow-[0_0_20px_rgba(6,182,212,0.08)] bg-zinc-950/60 scale-[1.02] hover:scale-105 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)]"
+                      : "z-0 hover:z-20 border-white/[0.08] bg-zinc-950/20 hover:bg-zinc-900/40 hover:border-cyan-400/60 hover:shadow-[0_0_25px_rgba(6,182,212,0.12)] scale-100 hover:scale-105"
                   }`}
                 >
                   {/* Shared backdrop selection capsule */}
@@ -646,7 +644,7 @@ export default function ThreatLifecycle() {
                     className={`p-3 rounded-xl border transition-all duration-300 ${
                       isActive
                         ? "bg-cyan-500/10 border-cyan-500/20 text-cyan-400"
-                        : "bg-zinc-950 border-white/[0.08] text-zinc-500 group-hover:border-cyan-500/30 group-hover:text-cyan-400 group-hover:bg-cyan-500/10"
+                        : "bg-zinc-950 border-white/[0.08] text-zinc-500 group-hover:border-cyan-400/50 group-hover:text-cyan-400 group-hover:bg-cyan-500/10"
                     }`}
                   >
                     <Icon size={22} className={isActive ? "animate-pulse" : ""} />
@@ -681,7 +679,11 @@ export default function ThreatLifecycle() {
           </div>
 
           {/* Right Column: Tab View Showcase */}
-          <div className="lg:col-span-7 flex flex-col justify-between h-full bg-zinc-950/40 border border-white/[0.12] rounded-3xl p-8 relative overflow-hidden backdrop-blur-xl">
+          <div
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className="lg:col-span-7 flex flex-col justify-between h-full bg-zinc-950/40 border border-white/[0.12] rounded-3xl p-8 relative overflow-hidden backdrop-blur-xl"
+          >
             {/* Visual Simulator Viewer Wrapper */}
             <div className="relative z-10 w-full aspect-[4/3] rounded-2xl overflow-hidden">
               <AnimatePresence mode="wait">
