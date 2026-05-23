@@ -17,7 +17,7 @@ export default function Footer({ onOpenDemo }: FooterProps) {
 
       <div className="max-w-3xl w-full flex flex-col items-center text-center relative z-10">
         {/* Subtle badge */}
-        <div className="text-[10px] font-bold uppercase tracking-widest text-cyan-400 mb-6">
+        <div className="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-6">
           Pilot Phase Enrolling
         </div>
 
