@@ -625,7 +625,7 @@ export default function ThreatLifecycle() {
                   className={`group w-full text-left p-6 rounded-2xl border transition-all duration-300 flex items-start gap-4 cursor-pointer relative overflow-hidden active:scale-[0.97] transition-transform duration-150 ${
                     isActive
                       ? "border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.05)] bg-zinc-950/60"
-                      : "border-white/[0.1] bg-zinc-950/20 hover:bg-zinc-900/10 hover:border-white/[0.18]"
+                      : "border-white/[0.1] bg-zinc-950/20 hover:bg-zinc-900/10 hover:border-cyan-500/20 hover:shadow-[0_0_15px_rgba(6,182,212,0.03)]"
                   }`}
                 >
                   {/* Shared backdrop selection capsule */}
@@ -641,7 +641,7 @@ export default function ThreatLifecycle() {
                     className={`p-3 rounded-xl border transition-all duration-300 ${
                       isActive
                         ? "bg-cyan-500/10 border-cyan-500/20 text-cyan-400"
-                        : "bg-zinc-950 border-white/[0.1] text-zinc-500 group-hover:border-zinc-700/80 group-hover:text-zinc-300"
+                        : "bg-zinc-950 border-white/[0.1] text-zinc-500 group-hover:border-cyan-500/20 group-hover:text-cyan-400 group-hover:bg-cyan-500/5"
                     }`}
                   >
                     <Icon size={22} className={isActive ? "animate-pulse" : ""} />
@@ -650,7 +650,7 @@ export default function ThreatLifecycle() {
                   <div className="flex-1">
                     <span
                       className={`text-[10px] font-bold tracking-wider transition-colors ${
-                        isActive ? "text-cyan-400" : "text-zinc-500 group-hover:text-zinc-400"
+                        isActive ? "text-cyan-400" : "text-zinc-500 group-hover:text-cyan-400/80"
                       }`}
                     >
                       {step.badge}

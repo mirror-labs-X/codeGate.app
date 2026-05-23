@@ -55,8 +55,14 @@ function ValuePropCard({ children, className = "", isHighlighted, onClick, color
       stateClasses = "border border-purple-500/50 hover:border-purple-500/40 bg-zinc-950/90 backdrop-blur-md shadow-[0_0_35px_rgba(168,85,247,0.12)] scale-[1.02]";
     }
   } else {
-    // Inactive card uses premium glassmorphic border styling matching BentoCard
-    stateClasses = "border border-white/[0.12] hover:border-white/[0.22] bg-zinc-950/65 backdrop-blur-md";
+    // Inactive card uses premium glassmorphic border styling with color-specific hover glow
+    if (colorType === "devs") {
+      stateClasses = "border border-white/[0.12] hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(6,182,212,0.04)] bg-zinc-950/65 backdrop-blur-md";
+    } else if (colorType === "secops") {
+      stateClasses = "border border-white/[0.12] hover:border-indigo-500/30 hover:shadow-[0_0_20px_rgba(99,102,241,0.04)] bg-zinc-950/65 backdrop-blur-md";
+    } else {
+      stateClasses = "border border-white/[0.12] hover:border-purple-500/30 hover:shadow-[0_0_20px_rgba(168,85,247,0.04)] bg-zinc-950/65 backdrop-blur-md";
+    }
   }
 
   return (
@@ -268,16 +274,30 @@ export default function ValueProp() {
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
                   <div
-                    className={`p-2.5 rounded-xl bg-zinc-900 border border-white/5 ${
-                      isHighlighted ? perspective.accent : "text-zinc-500"
-                    } transition-colors`}
+                    className={`p-2.5 rounded-xl bg-zinc-900 border transition-all duration-300 ${
+                      isHighlighted
+                        ? `${perspective.accent} border-white/5`
+                        : `text-zinc-500 border-white/5 ${
+                            perspective.id === "devs"
+                              ? "group-hover:text-cyan-400 group-hover:border-cyan-500/20"
+                              : perspective.id === "secops"
+                              ? "group-hover:text-indigo-400 group-hover:border-indigo-500/20"
+                              : "group-hover:text-purple-400 group-hover:border-purple-500/20"
+                          }`
+                    }`}
                   >
                     <PIcon size={18} />
                   </div>
                   <span
-                    className={`text-[10px] font-bold uppercase tracking-wider ${
-                      isHighlighted ? perspective.accent : "text-zinc-600"
-                    } transition-colors`}
+                    className={`text-[10px] font-bold uppercase tracking-wider transition-colors ${
+                      isHighlighted
+                        ? perspective.accent
+                        : perspective.id === "devs"
+                        ? "text-zinc-600 group-hover:text-cyan-400/80"
+                        : perspective.id === "secops"
+                        ? "text-zinc-600 group-hover:text-indigo-400/80"
+                        : "text-zinc-600 group-hover:text-purple-400/80"
+                    }`}
                   >
                     {perspective.label}
                   </span>
