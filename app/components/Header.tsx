@@ -27,9 +27,9 @@ export default function Header({ onOpenDemo }: HeaderProps) {
     >
       {/* Brand Logo */}
       <a href="#" className="flex items-center gap-2.5 group active:scale-[0.97] transition-transform duration-150">
-        <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-900 border border-white/[0.1] overflow-hidden">
+        <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-900 border border-cyan-500/30 shadow-[0_0_8px_rgba(6,182,212,0.15)] overflow-hidden">
           {/* Glowing dot in logo */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-cyan-500/20 opacity-100 transition-opacity duration-300" />
           <svg
             width="18"
             height="18"
@@ -39,7 +39,7 @@ export default function Header({ onOpenDemo }: HeaderProps) {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-white group-hover:text-cyan-400 transition-colors duration-300"
+            className="text-cyan-400 transition-colors duration-300"
           >
             {/* Custom geometric logo representation of a gated shield */}
             <path d="M12 2L3 7v9c0 5.5 4.5 10 9 11 4.5-1 9-5.5 9-11V7l-9-5z" />
@@ -47,7 +47,7 @@ export default function Header({ onOpenDemo }: HeaderProps) {
             <path d="M9 11h6" />
           </svg>
         </div>
-        <span className="text-base font-semibold tracking-tight text-white group-hover:text-zinc-200 transition-colors">
+        <span className="text-base font-semibold tracking-tight text-white transition-colors">
           Code<span className="text-cyan-400">Gate</span>
         </span>
       </a>

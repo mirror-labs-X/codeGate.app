@@ -44,9 +44,9 @@ export default function Footer({ onOpenDemo }: FooterProps) {
         {/* Bottom footer bar */}
         <div className="w-full pt-10 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 font-medium tracking-wide">
           <a href="#" className="flex items-center gap-2 group active:scale-[0.97] transition-transform duration-150 cursor-pointer">
-            <div className="relative flex items-center justify-center w-7 h-7 rounded-lg bg-zinc-950 border border-white/[0.08] overflow-hidden transition-all duration-300 group-hover:border-cyan-500/30 group-hover:shadow-[0_0_12px_rgba(6,182,212,0.15)]">
+            <div className="relative flex items-center justify-center w-7 h-7 rounded-lg bg-zinc-950 border border-cyan-500/30 shadow-[0_0_8px_rgba(6,182,212,0.15)] overflow-hidden transition-all duration-300">
               {/* Subtle hover gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 to-cyan-500/10 opacity-100 transition-opacity duration-300" />
               <svg
                 width="14"
                 height="14"
@@ -56,15 +56,15 @@ export default function Footer({ onOpenDemo }: FooterProps) {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="text-zinc-500 group-hover:text-cyan-400 transition-colors duration-300"
+                className="text-cyan-400 transition-colors duration-300"
               >
                 <path d="M12 2L3 7v9c0 5.5 4.5 10 9 11 4.5-1 9-5.5 9-11V7l-9-5z" />
                 <path d="M12 17v-6" />
                 <path d="M9 11h6" />
               </svg>
             </div>
-            <span className="text-xs font-semibold tracking-tight text-zinc-500 group-hover:text-zinc-300 transition-colors duration-300">
-              Code<span className="text-zinc-600 group-hover:text-cyan-400 transition-colors duration-300">Gate</span>
+            <span className="text-xs font-semibold tracking-tight text-zinc-300 transition-colors duration-300">
+              Code<span className="text-cyan-400 transition-colors duration-300">Gate</span>
             </span>
           </a>
 
