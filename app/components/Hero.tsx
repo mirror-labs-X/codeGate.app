@@ -321,12 +321,11 @@ export default function Hero({ onOpenDemo }: HeroProps) {
           </MagneticButton>
         </motion.div>
 
-        {/* Integrations/Ecosystem Marquee */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5, delay: 0.4 }}
-          className="w-full max-w-4xl overflow-hidden py-4.5 relative mb-16 border-y border-white/[0.04] bg-zinc-950/20"
+          className="w-full max-w-4xl overflow-hidden py-4.5 relative mb-16"
         >
           {/* Left & Right gradient masks for smooth fade */}
           <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none" />
@@ -340,7 +339,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
             {[...INTEGRATIONS, ...INTEGRATIONS].map((item, idx) => (
               <div
                 key={idx}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/30 border border-white/[0.05] hover:border-cyan-500/25 transition-colors duration-300 group"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/15 hover:bg-zinc-900/35 transition-all duration-300 group"
               >
                 <span className={`w-1.5 h-1.5 rounded-full ${
                   item.type.includes("IDE") ? "bg-cyan-400" :
