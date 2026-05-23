@@ -752,7 +752,7 @@ export default function DashboardShowcase() {
 
     const timer = setInterval(() => {
       setActiveTabIdx((prev) => (prev + 1) % tabs.length);
-    }, 6000);
+    }, 10000);
 
     return () => clearInterval(timer);
   }, [isPaused, tabs.length]);

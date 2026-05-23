@@ -564,7 +564,7 @@ export default function ThreatLifecycle() {
   const activeStep = steps.find((s) => s.id === activeStepId) || steps[0];
   const ActiveSimulator = activeStep.simulator;
 
-  // Autoplay loop every 6s on idle
+  // Autoplay loop every 10s on idle
   useEffect(() => {
     if (isPaused) return;
 
@@ -573,7 +573,7 @@ export default function ThreatLifecycle() {
         const next = prev + 1;
         return next > steps.length ? 1 : next;
       });
-    }, 6000);
+    }, 10000);
 
     return () => clearInterval(timer);
   }, [isPaused]);
@@ -678,7 +678,7 @@ export default function ThreatLifecycle() {
           {/* Right Column: Tab View Showcase */}
           <div className="lg:col-span-7 flex flex-col justify-between h-full bg-zinc-950/40 border border-white/[0.12] rounded-3xl p-8 relative overflow-hidden backdrop-blur-xl">
             {/* Visual Simulator Viewer Wrapper */}
-            <div className="relative z-10 w-full aspect-[4/3] rounded-2xl overflow-hidden bg-zinc-900/40 border border-white/[0.1] hover:border-cyan-500/35 transition-colors duration-300">
+            <div className="relative z-10 w-full aspect-[4/3] rounded-2xl overflow-hidden">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeStep.id}

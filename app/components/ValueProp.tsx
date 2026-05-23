@@ -143,7 +143,7 @@ export default function ValueProp() {
   const [activeTab, setActiveTab] = useState("devs");
   const [isPaused, setIsPaused] = useState(false);
 
-  // Autoplay loop every 6s on idle
+  // Autoplay loop every 10s on idle
   useEffect(() => {
     if (isPaused) return;
 
@@ -153,7 +153,7 @@ export default function ValueProp() {
         const nextIdx = (currentIdx + 1) % PERSPECTIVES.length;
         return PERSPECTIVES[nextIdx].id;
       });
-    }, 6000);
+    }, 10000);
 
     return () => clearInterval(timer);
   }, [isPaused]);
