@@ -603,7 +603,7 @@ export default function ThreatLifecycle() {
             codegate-brain // autonomous-hunt
           </div>
           <h2 className="text-3xl sm:text-5xl font-semibold tracking-tight text-white mb-6">
-            The CodeGate Lifecycle
+            The Code<span className="text-cyan-400">Gate</span> Lifecycle
           </h2>
           <p className="text-zinc-400 font-normal leading-relaxed text-sm max-w-2xl mx-auto">
             End-to-end autonomous threat hunting pipeline — from local PII-scrubbed ingest through agentic reasoning, isolated sandbox triage, to one-click sovereign patch delivery.

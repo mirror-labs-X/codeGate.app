@@ -781,7 +781,7 @@ export default function DashboardShowcase() {
           Sovereign Control Plane
         </div>
         <h2 className="text-3xl sm:text-5xl font-semibold tracking-tight text-white mb-6">
-          The CodeGate Command Center
+          The Code<span className="text-cyan-400">Gate</span> Command Center
         </h2>
         <p className="text-zinc-400 font-normal leading-relaxed text-sm max-w-2xl mx-auto">
           Manage your VPC security agent configurations, analyze on-premise scan records, and inspect agentic workflows in a state-of-the-art interface.
