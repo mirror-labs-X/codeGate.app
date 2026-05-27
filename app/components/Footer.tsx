@@ -48,8 +48,8 @@ export default function Footer({ onOpenDemo }: FooterProps) {
               {/* Subtle hover gradient background */}
               <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 to-cyan-500/10 opacity-100 transition-opacity duration-300" />
               <svg
-                width="14"
-                height="14"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -58,9 +58,9 @@ export default function Footer({ onOpenDemo }: FooterProps) {
                 strokeLinejoin="round"
                 className="text-cyan-400 transition-colors duration-300"
               >
-                <path d="M12 2L3 7v9c0 5.5 4.5 10 9 11 4.5-1 9-5.5 9-11V7l-9-5z" />
-                <path d="M12 17v-6" />
-                <path d="M9 11h6" />
+                <path d="M12 2L4.8 6v7.2c0 4.4 3.6 8 7.2 8.8 3.6-0.8 7.2-4.4 7.2-8.8V6l-7.2-4z" />
+                <path d="M12 14v-4.8" />
+                <path d="M9.6 9.2h4.8" />
               </svg>
             </div>
             <span className="text-xs font-semibold tracking-tight text-zinc-300 transition-colors duration-300">

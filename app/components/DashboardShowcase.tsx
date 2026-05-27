@@ -34,6 +34,15 @@ function OverviewTab({ tokens }: OverviewTabProps) {
   ]);
 
   const logIndex = useRef(0);
+  const [hoveredPoint, setHoveredPoint] = useState<number | null>(null);
+
+  const dataPoints = [
+    { x: 0, cyanY: 100, emY: 110, time: "10:00 AM", total: "1,204,500", sanitized: "1,204,120", deflection: "99.9%" },
+    { x: 120, cyanY: 70, emY: 85, time: "10:15 AM", total: "2,408,000", sanitized: "2,406,800", deflection: "99.9%" },
+    { x: 240, cyanY: 40, emY: 55, time: "10:30 AM", total: "5,820,000", sanitized: "5,818,400", deflection: "99.9%" },
+    { x: 320, cyanY: 20, emY: 35, time: "10:45 AM", total: "9,430,000", sanitized: "9,428,200", deflection: "99.9%" },
+    { x: 400, cyanY: 10, emY: 25, time: "11:00 AM", total: tokens.toLocaleString(), sanitized: (tokens - 380).toLocaleString(), deflection: "99.9%" }
+  ];
 
   useEffect(() => {
     const pool = [
@@ -184,19 +193,93 @@ function OverviewTab({ tokens }: OverviewTabProps) {
                 strokeDasharray="3 3"
               />
 
-              {/* Data points */}
-              <circle cx="120" cy="70" r="2.5" fill="rgb(6, 182, 212)" />
-              <circle cx="240" cy="40" r="2.5" fill="rgb(6, 182, 212)" />
-              <circle cx="320" cy="20" r="2.5" fill="rgb(6, 182, 212)" />
+              {/* Vertical Guide Line when Hovered */}
+              {hoveredPoint !== null && (
+                <line
+                  x1={dataPoints[hoveredPoint].x}
+                  y1="0"
+                  x2={dataPoints[hoveredPoint].x}
+                  y2="120"
+                  stroke="rgba(6, 240, 255, 0.3)"
+                  strokeWidth="1"
+                  strokeDasharray="2 2"
+                  pointerEvents="none"
+                />
+              )}
 
-              <circle cx="120" cy="85" r="2" fill="rgb(16, 185, 129)" />
-              <circle cx="240" cy="55" r="2" fill="rgb(16, 185, 129)" />
+              {/* Data points */}
+              {dataPoints.map((pt, idx) => (
+                <g key={idx}>
+                  <circle
+                    cx={pt.x}
+                    cy={pt.cyanY}
+                    r={hoveredPoint === idx ? 4.5 : 2.5}
+                    fill="rgb(6, 182, 212)"
+                    className="transition-all duration-200"
+                  />
+                  <circle
+                    cx={pt.x}
+                    cy={pt.emY}
+                    r={hoveredPoint === idx ? 4 : 2}
+                    fill="rgb(16, 185, 129)"
+                    className="transition-all duration-200"
+                  />
+                </g>
+              ))}
+
+              {/* Invisible interactive hover zones */}
+              {dataPoints.map((pt, idx) => {
+                const zoneWidth = 80;
+                const zoneX = pt.x - zoneWidth / 2;
+                return (
+                  <rect
+                    key={idx}
+                    x={Math.max(0, zoneX)}
+                    y="0"
+                    width={zoneWidth}
+                    height="120"
+                    fill="transparent"
+                    className="cursor-pointer"
+                    onMouseEnter={() => setHoveredPoint(idx)}
+                    onMouseLeave={() => setHoveredPoint(null)}
+                  />
+                );
+              })}
             </svg>
 
             {/* Float details indicator */}
             <div className="absolute top-2 left-2 bg-black/60 border border-white/[0.04] backdrop-blur-sm rounded px-1.5 py-0.5 text-[7px] font-mono text-zinc-400">
               Auto-Compaction: Enabled
             </div>
+
+            {/* Hover details tooltip overlay */}
+            <AnimatePresence>
+              {hoveredPoint !== null && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="absolute bg-zinc-950/95 border border-white/[0.08] backdrop-blur-md rounded-lg p-2 shadow-xl pointer-events-none text-[8px] font-mono space-y-1 z-30"
+                  style={{
+                    top: "8px",
+                    right: "8px",
+                  }}
+                >
+                  <div className="text-zinc-500 font-bold border-b border-white/[0.04] pb-0.5 flex justify-between gap-4">
+                    <span>TIME: {dataPoints[hoveredPoint].time}</span>
+                    <span className="text-cyan-400 font-bold">DEFLECTED: {dataPoints[hoveredPoint].deflection}</span>
+                  </div>
+                  <div className="flex justify-between gap-4 text-zinc-300">
+                    <span>Total Throughput:</span>
+                    <span className="text-cyan-400 font-bold">{dataPoints[hoveredPoint].total}</span>
+                  </div>
+                  <div className="flex justify-between gap-4 text-zinc-300">
+                    <span>Sanitized Packets:</span>
+                    <span className="text-emerald-400 font-bold">{dataPoints[hoveredPoint].sanitized}</span>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
 
