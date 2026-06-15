@@ -25,7 +25,7 @@ CodeGate runs entirely within your perimeter. It actively scrubs credentials, AP
 Instead of relying on passive regex scanners or static AST analyses that generate noisy warnings, CodeGate executes suspect code pathways inside isolated, short-lived Docker sandboxes. It only alerts you when a real vulnerability or exploit is verified.
 
 ### 📈 Flat-Rate Scaling
-Traditional repository scanning scales non-linearly with lines of code and periodic scanning token costs. By deploying local open-weight coding models (such as `Qwen-Coder` and `Ollama`), CodeGate delivers predictable flat-rate security scaling.
+Traditional repository scanning scales non-linearly with lines of code and periodic scanning token costs. By deploying custom proprietary coding models by codeapp locally, CodeGate delivers predictable flat-rate security scaling.
 
 ### 🔄 Staged Update Rollouts
 To prevent model updates from breaking custom-tuned weights and localized rulesets, CodeGate hosts model tuning outside your production pipeline. Updates are shipped securely as staged, pre-verified releases, keeping your custom models stable.
