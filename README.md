@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CodeGate
 
-## Getting Started
+> **Autonomous Zero-Day Hunting. Absolute Data Sovereignty. Flat-Rate Scaling.**
 
-First, run the development server:
+CodeGate is the sovereign, Agentic AI platform that actively hunts for zero-day threats in your codebase—without slowing down developers, leaking proprietary data, or incurring volatile token fees. 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌐 Live Site
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Visit the live website and product portal at:
+### **[https://codegate.app/](https://codegate.app/)**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> [!IMPORTANT]
+> **Requesting the Pilot:** We are currently enrolling teams for the CodeGate Pilot Phase. Please visit our hosted website link above to request pilot access.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Core Capabilities
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🛡️ Absolute Data Sovereignty
+CodeGate runs entirely within your perimeter. It actively scrubs credentials, API keys, and PII from developer context windows before context is sent, ensuring zero data leakage outside your trusted zones.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🧪 Automated Sandbox Triage & Verification
+Instead of relying on passive regex scanners or static AST analyses that generate noisy warnings, CodeGate executes suspect code pathways inside isolated, short-lived Docker sandboxes. It only alerts you when a real vulnerability or exploit is verified.
 
-## Deploy on Vercel
+### 📈 Flat-Rate Scaling
+Traditional repository scanning scales non-linearly with lines of code and periodic scanning token costs. By deploying custom proprietary coding models by codeapp locally, CodeGate delivers predictable flat-rate security scaling.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🔄 Staged Update Rollouts
+To prevent model updates from breaking custom-tuned weights and localized rulesets, CodeGate hosts model tuning outside your production pipeline. Updates are shipped securely as staged, pre-verified releases, keeping your custom models stable.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Technical Support & Custom Deployment
+
+For custom deployment options, integrations with enterprise identity providers (SSO), and custom-tuned private models, please request pilot access through our [live portal website](https://codegate.app/).
