@@ -29,7 +29,7 @@ export function BentoCard({ children, className = "" }: BentoCardProps) {
   return (
     <div
       onMouseMove={handleMouseMove}
-      className={`group relative overflow-hidden rounded-2xl border border-white/[0.12] bg-zinc-950/65 backdrop-blur-md p-8 transition-colors duration-300 hover:border-white/[0.22] ${className}`}
+      className={`group relative overflow-hidden rounded-2xl border border-white/[0.12] bg-zinc-950/65 backdrop-blur-md p-5 sm:p-6 md:p-8 transition-colors duration-300 hover:border-white/[0.22] ${className}`}
     >
       {/* Light glow overlay following mouse */}
       <motion.div
@@ -105,6 +105,14 @@ export default function BentoGrid() {
 
   return (
     <section id="features" className="relative py-10 md:py-14 px-6 bg-black z-10 flex flex-col items-center">
+      {/* Background Grid */}
+      <div
+        className="absolute inset-0 z-0 opacity-[0.02] pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
+          backgroundSize: "45px 45px",
+        }}
+      />
       {/* Heading */}
       <div className="max-w-5xl w-full text-center mb-16">
         <div className="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-3">
@@ -266,23 +274,23 @@ export default function BentoGrid() {
           </div>
 
           {/* Logic Tree Visual */}
-          <div className="my-5 p-4 rounded-xl bg-zinc-900/30 border border-white/[0.08] flex items-center justify-between relative overflow-hidden font-mono text-[10px]">
+          <div className="my-5 p-2.5 sm:p-4 pb-7 sm:pb-8 rounded-xl bg-zinc-900/30 border border-white/[0.08] flex items-start justify-between relative overflow-hidden font-mono text-[10px]">
             {/* AST Code Node */}
             <div 
-              className="flex flex-col items-center gap-1 z-10 cursor-pointer group/node select-none"
+              className="relative flex flex-col items-center cursor-pointer group/node select-none"
               onMouseEnter={() => setHoveredNode("ast")}
               onMouseLeave={() => setHoveredNode(null)}
             >
-              <div className={`p-1.5 rounded-lg border transition-all duration-300 ${
+              <div className={`p-1.5 rounded-lg border transition-all duration-300 z-10 ${
                 hoveredNode === "ast" ? "bg-cyan-950 border-cyan-500/50 text-cyan-400 scale-110 shadow-[0_0_10px_rgba(6,182,212,0.3)]" : "bg-zinc-950 border-white/5 text-zinc-400"
               }`}>
                 <Code size={14} />
               </div>
-              <span className="text-zinc-500 text-[8px] uppercase tracking-wider group-hover/node:text-cyan-400 transition-colors">AST Code</span>
+              <span className="absolute top-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-zinc-500 text-[8px] uppercase tracking-wider group-hover/node:text-cyan-400 transition-colors">AST Code</span>
             </div>
 
             {/* Connecting lines */}
-            <div className="flex-1 h-px bg-gradient-to-r from-cyan-400 to-indigo-500 relative opacity-40 mx-2">
+            <div className="flex-1 h-px bg-gradient-to-r from-cyan-400 to-indigo-500 relative mt-[14px] opacity-40">
               <motion.div
                 animate={{ x: ["0%", "100%"] }}
                 transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
@@ -292,20 +300,20 @@ export default function BentoGrid() {
 
             {/* ReAct Node */}
             <div 
-              className="flex flex-col items-center gap-1 z-10 cursor-pointer group/node select-none"
+              className="relative flex flex-col items-center cursor-pointer group/node select-none"
               onMouseEnter={() => setHoveredNode("react")}
               onMouseLeave={() => setHoveredNode(null)}
             >
-              <div className={`p-1.5 rounded-lg border transition-all duration-300 ${
+              <div className={`p-1.5 rounded-lg border transition-all duration-300 z-10 ${
                 hoveredNode === "react" ? "bg-indigo-950 border-indigo-500/50 text-indigo-400 scale-110 shadow-[0_0_10px_rgba(99,102,241,0.3)]" : "bg-cyan-950 border-cyan-500/30 text-cyan-400 animate-pulse"
               }`}>
                 <Brain size={14} />
               </div>
-              <span className="text-cyan-400 text-[8px] uppercase tracking-wider group-hover/node:text-indigo-400 transition-colors">ReAct</span>
+              <span className="absolute top-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-cyan-400 text-[8px] uppercase tracking-wider group-hover/node:text-indigo-400 transition-colors">ReAct</span>
             </div>
 
             {/* Connecting lines */}
-            <div className="flex-1 h-px bg-gradient-to-r from-indigo-500 to-emerald-400 relative opacity-40 mx-2">
+            <div className="flex-1 h-px bg-gradient-to-r from-indigo-500 to-emerald-400 relative mt-[14px] opacity-40">
               <motion.div
                 animate={{ x: ["0%", "100%"] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
@@ -315,16 +323,16 @@ export default function BentoGrid() {
 
             {/* DB Proof Node */}
             <div 
-              className="flex flex-col items-center gap-1 z-10 cursor-pointer group/node select-none"
+              className="relative flex flex-col items-center cursor-pointer group/node select-none"
               onMouseEnter={() => setHoveredNode("db")}
               onMouseLeave={() => setHoveredNode(null)}
             >
-              <div className={`p-1.5 rounded-lg border transition-all duration-300 ${
+              <div className={`p-1.5 rounded-lg border transition-all duration-300 z-10 ${
                 hoveredNode === "db" ? "bg-emerald-950 border-emerald-500/50 text-emerald-400 scale-110 shadow-[0_0_10px_rgba(16,185,129,0.3)]" : "bg-zinc-950 border-white/5 text-zinc-400"
               }`}>
                 <Database size={14} />
               </div>
-              <span className="text-zinc-500 text-[8px] uppercase tracking-wider group-hover/node:text-emerald-400 transition-colors">DB Proof</span>
+              <span className="absolute top-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-zinc-500 text-[8px] uppercase tracking-wider group-hover/node:text-emerald-400 transition-colors">DB Proof</span>
             </div>
           </div>
 
@@ -407,34 +415,34 @@ export default function BentoGrid() {
           </a>
         </BentoCard>
 
-        {/* Card 4: Private Model Fine-Tuning */}
+        {/* Card 4: Sovereign Model Updates */}
         <BentoCard className="flex flex-col justify-between min-h-[380px]">
           <div>
             <div className="p-2 w-fit rounded-lg bg-purple-950/40 border border-purple-500/20 text-purple-400 mb-6">
               <Brain size={20} />
             </div>
             <h3 className="text-xl font-semibold text-zinc-100 tracking-tight mb-2">
-              Private Model Tuning
+              Sovereign Model Updates
             </h3>
             <p className="text-sm text-zinc-400 leading-relaxed font-normal">
-              Secure Custom Models. Train and run security models (like Qwen-30B) on your own secure infrastructure. Keep your codebase, proprietary APIs, and intellectual property entirely private within your firewall.
+              Secure, tested updates. We deliver pre-trained, versioned security model weights to your VPC with staged rollout controls. Validate model updates inside your local staging perimeter before promoting them, ensuring your custom tuning, prompt gates, and adapters never break.
             </p>
           </div>
 
           {/* Training Progress Visual */}
           <div className="my-5 p-4 rounded-xl bg-zinc-900/30 border border-white/[0.08] space-y-3 font-mono text-[10px]">
             <div className="flex items-center justify-between pb-2 border-b border-white/5">
-              <span className="text-zinc-400 font-semibold text-[9px]">Local LoRA Training Console</span>
-              <span className="text-cyan-400 text-[8px] animate-pulse bg-cyan-500/10 px-1.5 py-0.5 rounded border border-cyan-500/20 font-medium">Training...</span>
+              <span className="text-zinc-400 font-semibold text-[9px]">Model Staging & Update Console</span>
+              <span className="text-cyan-400 text-[8px] animate-pulse bg-cyan-500/10 px-1.5 py-0.5 rounded border border-cyan-500/20 font-medium">Validating...</span>
             </div>
             
             <div 
-              className={`flex justify-between text-zinc-400 p-1.5 rounded border border-transparent hover:border-purple-500/20 hover:bg-purple-950/10 cursor-pointer transition-all ${hoveredCard4Node === "base" ? "bg-purple-950/15 border-purple-500/30" : ""}`}
+              className={`flex justify-between items-center text-zinc-400 p-1.5 rounded border border-transparent hover:border-purple-500/20 hover:bg-purple-950/10 cursor-pointer transition-all ${hoveredCard4Node === "base" ? "bg-purple-950/15 border-purple-500/30" : ""}`}
               onMouseEnter={() => setHoveredCard4Node("base")}
               onMouseLeave={() => setHoveredCard4Node(null)}
             >
-              <span>Model Base</span>
-              <span className="text-zinc-500">Qwen3-Coder-30B-A3B-Instruct</span>
+              <span>Model Engine</span>
+              <span className="text-zinc-500 truncate max-w-[120px] sm:max-w-none text-right" title="codegate-coder-30b">codegate-coder-30b</span>
             </div>
 
             <div 
@@ -443,13 +451,13 @@ export default function BentoGrid() {
               onMouseLeave={() => setHoveredCard4Node(null)}
             >
               <div className="flex justify-between text-zinc-400">
-                <span>Loss: 0.124</span>
-                <span className="text-zinc-500">Epoch 3/5</span>
+                <span>Staged Update: v1.2.0-stable</span>
+                <span className="text-zinc-500">Test Suite: 84%</span>
               </div>
               <div className="w-full bg-zinc-950 rounded-full h-1.5 overflow-hidden border border-white/[0.04]">
                 <motion.div
                   initial={{ width: "0%" }}
-                  animate={{ width: "65%" }}
+                  animate={{ width: "84%" }}
                   transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
                   className="bg-purple-500 h-full rounded-full"
                 />
@@ -461,28 +469,28 @@ export default function BentoGrid() {
               onMouseEnter={() => setHoveredCard4Node("dataset")}
               onMouseLeave={() => setHoveredCard4Node(null)}
             >
-              Dataset prepared: prep_dataset.py // 12,450 local samples parsed
+              Validation checks: 0 rule regressions detected.
             </div>
           </div>
 
           {/* Interactive Info Display Overlay */}
           <div className="min-h-[44px] bg-zinc-950/80 border border-white/[0.04] rounded-lg p-2.5 mb-4 text-[9px] font-mono text-zinc-400 leading-normal flex items-center select-none">
             {hoveredCard4Node === "base" && (
-              <span className="text-purple-400 animate-pulse">&gt; Weights: Private model weights cached inside secure compute nodes.</span>
+              <span className="text-purple-400 animate-pulse">&gt; Model Engine: Sovereign pre-trained weights container ready for local inference.</span>
             )}
             {hoveredCard4Node === "loss" && (
-              <span className="text-purple-400 animate-pulse">&gt; Loss Convergence: Training LoRA layer adapter on local AppSec patterns.</span>
+              <span className="text-purple-400 animate-pulse">&gt; Staged Update: Validating version v1.2.0-stable against local repository test suites.</span>
             )}
             {hoveredCard4Node === "dataset" && (
-              <span className="text-purple-400 animate-pulse">&gt; Tuner Dataset: Sanitized enterprise codebase trees indexed locally.</span>
+              <span className="text-purple-400 animate-pulse">&gt; Verification: Automated rule assurance check complete. 0 prompt or adapter breaks.</span>
             )}
             {!hoveredCard4Node && (
-              <span className="text-zinc-500">&gt; Hover console variables above to audit model tuning telemetry.</span>
+              <span className="text-zinc-500">&gt; Hover staging variables above to inspect update rollout logs.</span>
             )}
           </div>
 
           <a href="#architecture" className="inline-flex items-center gap-1 text-xs font-bold text-purple-400 hover:text-purple-300 transition-colors uppercase tracking-wider">
-            Start Tuning Pipeline <ChevronRight size={14} />
+            Manage Model Rollouts <ChevronRight size={14} />
           </a>
         </BentoCard>
 
@@ -524,15 +532,15 @@ export default function BentoGrid() {
             </div>
 
             <div 
-              className={`flex items-center justify-between text-emerald-400 p-1 rounded border border-transparent hover:border-pink-500/20 hover:bg-pink-950/10 cursor-pointer transition-all ${hoveredCard5Node === "pr" ? "bg-pink-950/15 border-pink-500/30 text-pink-300" : ""}`}
+              className={`flex items-center justify-between flex-wrap gap-1.5 text-emerald-400 p-1 rounded border border-transparent hover:border-pink-500/20 hover:bg-pink-950/10 cursor-pointer transition-all ${hoveredCard5Node === "pr" ? "bg-pink-950/15 border-pink-500/30 text-pink-300" : ""}`}
               onMouseEnter={() => setHoveredCard5Node("pr")}
               onMouseLeave={() => setHoveredCard5Node(null)}
             >
-              <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Pull Request #147 opened</span>
+              <div className="flex items-center gap-2 min-w-0">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+                <span className="truncate">Pull Request #147 opened</span>
               </div>
-              <span className="text-[8px] bg-emerald-500/10 px-1 py-0.2 rounded border border-emerald-500/20 font-bold">1-Click Patch</span>
+              <span className="text-[8px] bg-emerald-500/10 px-1 py-0.2 rounded border border-emerald-500/20 font-bold whitespace-nowrap">1-Click Patch</span>
             </div>
           </div>
 
