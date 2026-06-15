@@ -100,13 +100,13 @@ const STEP_CODE_DETAILS = {
       >
         {"1: DB_HOST = \"db.internal.net\"\n"}
         {"2: DB_USER = \"admin\"\n"}
-        <div className="bg-emerald-950/20 text-emerald-300 border-l-2 border-emerald-500 pl-2 py-0.5 my-1 inline-block w-full">
+        <div className="bg-emerald-950/20 text-emerald-300 border-l-2 border-emerald-500 pl-2 py-0.5 my-1 block w-full">
           {"3: DB_PASSWORD = \"[REDACTED]\"\n"}
         </div>
-        <div className="bg-emerald-950/20 text-emerald-300 border-l-2 border-emerald-500 pl-2 py-0.5 my-1 inline-block w-full">
+        <div className="bg-emerald-950/20 text-emerald-300 border-l-2 border-emerald-500 pl-2 py-0.5 my-1 block w-full">
           {"4: AWS_SECRET_ACCESS_KEY = \"[REDACTED]\"\n"}
         </div>
-        <div className="bg-emerald-950/20 text-emerald-300 border-l-2 border-emerald-500 pl-2 py-0.5 my-1 inline-block w-full">
+        <div className="bg-emerald-950/20 text-emerald-300 border-l-2 border-emerald-500 pl-2 py-0.5 my-1 block w-full">
           {"5: STRIPE_API_KEY = \"[REDACTED]\"\n"}
         </div>
         {"6: PORT = 8080\n"}
@@ -128,7 +128,7 @@ const STEP_CODE_DETAILS = {
         {"1: package scanner\n"}
         {"2:\n"}
         {"3: func PartitionCodebase(files []File) [][]File {\n"}
-        <div className="bg-indigo-950/20 text-indigo-300 border-l-2 border-indigo-500 pl-2 py-0.5 my-1 inline-block w-full">
+        <div className="bg-indigo-950/20 text-indigo-300 border-l-2 border-indigo-500 pl-2 py-0.5 my-1 block w-full">
           {"4:     const MAX_BATCH_TOKENS = 30000\n"}
           {"5:     // Partitioning files into context-capped limits\n"}
           {"6:     // Part 1: [auth.py, session.py] (12.4k tokens)\n"}
@@ -155,7 +155,7 @@ const STEP_CODE_DETAILS = {
         {"2: query = \"remote code execution exploit path\"\n"}
         {"3: results = local_db.similarity_search(query)\n"}
         {"4:\n"}
-        <div className="bg-cyan-950/20 text-cyan-400 border-l-2 border-cyan-500 pl-2 py-0.5 my-1 inline-block w-full">
+        <div className="bg-cyan-950/20 text-cyan-400 border-l-2 border-cyan-500 pl-2 py-0.5 my-1 block w-full">
           {"5: # Threat profile matched:\n"}
           {"6: # - CVE-2023-30551 (eval injection) - Match: 94%\n"}
           {"7: # - CVE-2022-29881 (command injection) - Match: 81%\n"}
@@ -177,7 +177,7 @@ const STEP_CODE_DETAILS = {
       >
         {"1: import docker\n"}
         {"2: # Running exploit execution inside isolated container...\n"}
-        <div className="bg-rose-950/20 text-rose-300 border-l-2 border-rose-500 pl-2 py-0.5 my-1 inline-block w-full">
+        <div className="bg-rose-950/20 text-rose-300 border-l-2 border-rose-500 pl-2 py-0.5 my-1 block w-full">
           {"3: container = client.containers.run(\n"}
           {"4:     image=\"python:3.10-alpine\",\n"}
           {"5:     mem_limit=\"128m\",\n"}

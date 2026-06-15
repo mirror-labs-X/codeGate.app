@@ -203,6 +203,14 @@ export default function ValueProp() {
       onKeyDownCapture={handleInteraction}
       className="relative py-10 md:py-14 px-6 bg-black z-10 flex flex-col items-center"
     >
+      {/* Background Grid */}
+      <div
+        className="absolute inset-0 z-0 opacity-[0.02] pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
+          backgroundSize: "45px 45px",
+        }}
+      />
       {/* Background radial accent glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0 w-[500px] h-[500px] rounded-full bg-indigo-500/5 blur-[120px]" />
 

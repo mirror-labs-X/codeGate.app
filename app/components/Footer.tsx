@@ -12,6 +12,14 @@ interface FooterProps {
 export default function Footer({ onOpenDemo }: FooterProps) {
   return (
     <footer className="relative py-10 md:py-14 px-6 bg-black z-10 overflow-hidden flex flex-col items-center border-t border-white/[0.04]">
+      {/* Background Grid */}
+      <div
+        className="absolute inset-0 z-0 opacity-[0.02] pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
+          backgroundSize: "45px 45px",
+        }}
+      />
       {/* Background Glow spotlight at bottom */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none z-0 w-[600px] h-[300px] rounded-t-full bg-cyan-500/[0.04] blur-[100px]" />
 
