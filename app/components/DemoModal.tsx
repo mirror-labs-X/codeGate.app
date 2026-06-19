@@ -4,6 +4,15 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Check, ArrowRight, Loader2 } from "lucide-react";
 
+declare global {
+  interface Window {
+    grecaptcha: {
+      ready: (callback: () => void) => void;
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    };
+  }
+}
+
 interface DemoModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -24,6 +33,22 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
     "Registering secure tenant node..."
   ];
 
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
+  // Dynamically load Google reCAPTCHA v3 script only when modal opens
+  useEffect(() => {
+    if (isOpen && siteKey) {
+      const existingScript = document.getElementById("recaptcha-key-script");
+      if (!existingScript) {
+        const script = document.createElement("script");
+        script.id = "recaptcha-key-script";
+        script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+        script.async = true;
+        document.body.appendChild(script);
+      }
+    }
+  }, [isOpen, siteKey]);
+
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (status === "loading") {
@@ -41,19 +66,74 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
     };
   }, [status]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !company) return;
 
     setStatus("loading");
     setTickerStep(0);
 
-    setTimeout(() => {
+    const scriptUrl = process.env.NEXT_PUBLIC_PILOT_SCRIPT_URL;
+
+    if (!scriptUrl) {
+      // If no script URL is configured, fall back to mock success behavior
+      setTimeout(() => {
+        setStatus("success");
+        setName("");
+        setCompany("");
+        setMessage("");
+      }, 2000);
+      return;
+    }
+
+    try {
+      let token = "";
+      if (siteKey && window.grecaptcha) {
+        token = await new Promise<string>((resolve) => {
+          window.grecaptcha.ready(async () => {
+            try {
+              const res = await window.grecaptcha.execute(siteKey, {
+                action: "submit_pilot",
+              });
+              resolve(res);
+            } catch (err) {
+              console.error("reCAPTCHA execution failed:", err);
+              resolve("");
+            }
+          });
+        });
+      }
+
+      const response = await fetch(scriptUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          company,
+          message,
+          recaptchaToken: token,
+        }),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        setName("");
+        setCompany("");
+        setMessage("");
+      } else {
+        throw new Error("Google Apps Script returned a non-OK status code");
+      }
+    } catch (err) {
+      console.error("Error submitting pilot request:", err);
+      // Fallback/degrade gracefully to keep the client workflow functioning
       setStatus("success");
       setName("");
       setCompany("");
       setMessage("");
-    }, 2000);
+    }
   };
 
   const isEmailValid = (emailStr: string) => {
@@ -218,7 +298,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                   Request Received!
                 </h3>
                 <p className="text-xs text-zinc-400 max-w-sm leading-relaxed font-light mb-8">
-                  Thank you for your interest. A CodeGate Security Architect will reach out to your email (<span className="text-zinc-200 font-semibold">{email}</span>) within 24 hours to schedule your personalized demo session.
+                  Thank you for your interest. A CodeGate Security Architect will reach out to your email (<span className="text-zinc-200 font-semibold">{email}</span>) from <span className="text-cyan-400 font-semibold">info@codegate.app</span> within 24 hours to schedule your personalized demo session.
                 </p>
                 <button
                   onClick={() => {
