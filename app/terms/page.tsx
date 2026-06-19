@@ -156,8 +156,8 @@ export default function TermsOfService() {
                 8. Governing Law
               </h2>
               <p>
-                These Terms shall be governed by and construed in accordance with the laws of the 
-                State of Delaware, without regard to conflicts of law principles.
+                These Terms shall be governed by and construed in accordance with the laws of 
+                Canada, without regard to conflicts of law principles.
               </p>
             </section>
 
