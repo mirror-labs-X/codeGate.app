@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 
@@ -13,10 +14,10 @@ export default function Header({ onOpenDemo }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { label: "Features", href: "#features" },
-    { label: "Lifecycle", href: "#lifecycle" },
-    { label: "Command Center", href: "#architecture" },
-    { label: "Security ROI", href: "#value-prop" }
+    { label: "Features", href: "/#features" },
+    { label: "Lifecycle", href: "/#lifecycle" },
+    { label: "Command Center", href: "/#architecture" },
+    { label: "Security ROI", href: "/#value-prop" }
   ];
 
   return (
@@ -27,7 +28,7 @@ export default function Header({ onOpenDemo }: HeaderProps) {
       className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between w-[calc(100%-2rem)] max-w-5xl px-6 py-2.5 rounded-full bg-black/30 border border-white/[0.08] backdrop-blur-lg shadow-2xl"
     >
       {/* Brand Logo */}
-      <a href="#" className="flex items-center gap-2.5 group active:scale-[0.97] transition-transform duration-150">
+      <Link href="/" className="flex items-center gap-2.5 group active:scale-[0.97] transition-transform duration-150">
         <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-900 border border-cyan-500/30 shadow-[0_0_8px_rgba(6,182,212,0.15)] overflow-hidden">
           {/* Glowing dot in logo */}
           <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-cyan-500/20 opacity-100 transition-opacity duration-300" />
@@ -51,7 +52,7 @@ export default function Header({ onOpenDemo }: HeaderProps) {
         <span className="text-base font-semibold tracking-tight text-white transition-colors">
           Code<span className="text-cyan-400">Gate</span>
         </span>
-      </a>
+      </Link>
 
       {/* Navigation Options - Hidden on Mobile */}
       <nav 
@@ -59,7 +60,7 @@ export default function Header({ onOpenDemo }: HeaderProps) {
         onMouseLeave={() => setHoveredIndex(null)}
       >
         {navLinks.map((link, idx) => (
-          <a
+          <Link
             key={link.href}
             href={link.href}
             onMouseEnter={() => setHoveredIndex(idx)}
@@ -73,7 +74,7 @@ export default function Header({ onOpenDemo }: HeaderProps) {
               />
             )}
             {link.label}
-          </a>
+          </Link>
         ))}
       </nav>
 
@@ -111,14 +112,14 @@ export default function Header({ onOpenDemo }: HeaderProps) {
             className="absolute top-16 left-0 right-0 z-45 flex flex-col gap-1 p-3 mx-2 rounded-2xl bg-zinc-950/95 border border-white/[0.08] backdrop-blur-xl md:hidden shadow-2xl"
           >
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="px-4 py-2.5 rounded-xl text-sm font-medium text-zinc-400 hover:text-white hover:bg-white/[0.04] transition-colors"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </motion.div>
         )}
