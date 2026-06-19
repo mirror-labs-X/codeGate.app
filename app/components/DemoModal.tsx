@@ -298,7 +298,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                   Request Received!
                 </h3>
                 <p className="text-xs text-zinc-400 max-w-sm leading-relaxed font-light mb-8">
-                  Thank you for your interest. A CodeGate Security Architect will reach out to your email (<span className="text-zinc-200 font-semibold">{email}</span>) from <span className="text-cyan-400 font-semibold">info@codegate.app</span> within 24 hours to schedule your personalized demo session.
+                  Thank you for your interest. A CodeGate Security Architect will reach out to your email (<span className="text-zinc-200 font-semibold">{email}</span>) from <span className="text-cyan-400 font-semibold">hello@codegate.app</span> within 24 hours to schedule your personalized demo session.
                 </p>
                 <button
                   onClick={() => {
