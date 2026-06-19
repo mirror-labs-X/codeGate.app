@@ -163,7 +163,44 @@ export default function TermsOfService() {
 
             <section className="space-y-3">
               <h2 className="text-lg font-semibold text-white tracking-tight">
-                9. Contact
+                9. Indemnification
+              </h2>
+              <p>
+                You agree to defend, indemnify, and hold harmless CodeGate, its affiliates, and its officers, 
+                directors, and employees from and against any and all claims, damages, obligations, losses, 
+                liabilities, costs, or debt, and expenses (including but not limited to attorney's fees) arising from: 
+                (i) your use of and access to the software; (ii) your violation of any term of these Terms; or 
+                (iii) your violation of any third-party right, including without limitation any intellectual property, 
+                privacy, or data protection terms governing third-party AI models.
+              </p>
+            </section>
+
+            <section className="space-y-3">
+              <h2 className="text-lg font-semibold text-white tracking-tight">
+                10. Dispute Resolution & Class Action Waiver
+              </h2>
+              <p>
+                YOU AND CODEGATE AGREE THAT ANY DISPUTE ARISING OUT OF OR RELATED TO THESE TERMS WILL BE RESOLVED 
+                SOLELY ON AN INDIVIDUAL BASIS AND NOT IN A CLASS, COLLECTIVE, OR REPRESENTATIVE CAPACITY. YOU WAIVE 
+                ANY RIGHT TO PARTICIPATE IN A CLASS ACTION LAWSUIT OR CLASS-WIDE ARBITRATION.
+              </p>
+            </section>
+
+            <section className="space-y-3">
+              <h2 className="text-lg font-semibold text-white tracking-tight">
+                11. Force Majeure & Severability
+              </h2>
+              <p>
+                Neither party shall be liable for any failure or delay in performance due to circumstances beyond their 
+                reasonable control, including cloud hosting outages, internet service disruptions, natural disasters, 
+                acts of war, or government actions. If any provision of these Terms is found to be unenforceable, the 
+                remaining provisions will remain in full force and effect.
+              </p>
+            </section>
+
+            <section className="space-y-3">
+              <h2 className="text-lg font-semibold text-white tracking-tight">
+                12. Contact
               </h2>
               <p>
                 If you have questions regarding these Terms or licensing structures, please contact 
