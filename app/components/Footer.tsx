@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Calendar, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import MagneticButton from "./MagneticButton";
 
 interface FooterProps {
@@ -43,7 +44,7 @@ export default function Footer({ onOpenDemo }: FooterProps) {
 
         {/* Bottom footer bar */}
         <div className="w-full pt-10 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 font-medium tracking-wide">
-          <a href="#" className="flex items-center gap-2 group active:scale-[0.97] transition-transform duration-150 cursor-pointer">
+          <Link href="/" className="flex items-center gap-2 group active:scale-[0.97] transition-transform duration-150 cursor-pointer">
             <div className="relative flex items-center justify-center w-7 h-7 rounded-lg bg-zinc-950 border border-cyan-500/30 shadow-[0_0_8px_rgba(6,182,212,0.15)] overflow-hidden transition-all duration-300">
               {/* Subtle hover gradient background */}
               <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 to-cyan-500/10 opacity-100 transition-opacity duration-300" />
@@ -66,15 +67,15 @@ export default function Footer({ onOpenDemo }: FooterProps) {
             <span className="text-xs font-semibold tracking-tight text-zinc-300 transition-colors duration-300">
               Code<span className="text-cyan-400 transition-colors duration-300">Gate</span>
             </span>
-          </a>
+          </Link>
 
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-zinc-300 transition-colors">
+            <Link href="/privacy" className="hover:text-zinc-300 transition-colors">
               Privacy Policy
-            </a>
-            <a href="#" className="hover:text-zinc-300 transition-colors">
+            </Link>
+            <Link href="/terms" className="hover:text-zinc-300 transition-colors">
               Terms of Service
-            </a>
+            </Link>
             <a href="mailto:hello@codegate.app" className="hover:text-zinc-300 transition-colors">
               Contact
             </a>
