@@ -682,9 +682,10 @@ function OrchestrationTab() {
       </div>
 
       {/* Pipeline flow visualization */}
-      <div className="relative w-full h-[200px]">
-        {/* Connection lines */}
-        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1000 200">
+      <div className="overflow-x-auto pb-4 scrollbar-thin">
+        <div className="relative min-w-[750px] h-[200px]">
+          {/* Connection lines */}
+          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1000 200">
           <defs>
             <linearGradient id="flow-grad" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="rgb(6,182,212)" stopOpacity="0.6" />
@@ -693,7 +694,7 @@ function OrchestrationTab() {
           </defs>
 
           {/* Static connection paths */}
-          <path d="M80,100 L920,100" stroke="rgb(39,39,42)" strokeWidth="2" fill="none" />
+          <path d="M108,100 L892,100" stroke="rgb(39,39,42)" strokeWidth="2" fill="none" />
 
           {/* Animated flow pulse */}
           {flowProgress < 6 && (
@@ -708,12 +709,12 @@ function OrchestrationTab() {
                 dur="2s"
                 repeatCount="indefinite"
                 path={
-                  flowProgress === 0 ? "M80,100 L220,100" :
+                  flowProgress === 0 ? "M108,100 L220,100" :
                   flowProgress === 1 ? "M220,100 L360,100" :
                   flowProgress === 2 ? "M360,100 L500,100" :
                   flowProgress === 3 ? "M500,100 L640,100" :
                   flowProgress === 4 ? "M640,100 L780,100" :
-                  flowProgress === 5 ? "M780,100 L920,100" : ""
+                  flowProgress === 5 ? "M780,100 L892,100" : ""
                 }
               />
             </motion.circle>
@@ -733,7 +734,7 @@ function OrchestrationTab() {
               style={{
                 left: `${node.x}%`,
                 top: `${node.y}%`,
-                transform: "translate(-50%, -50%)",
+                transform: "translate(-50%, -22px)",
               }}
             >
               <motion.div
@@ -743,7 +744,7 @@ function OrchestrationTab() {
                 }}
                 className={`p-3 rounded-xl border transition-colors cursor-pointer ${
                   isActive
-                    ? "bg-cyan-500/10 border-cyan-500/30 text-cyan-400"
+                    ? "bg-[#0d2126] border-cyan-500/30 text-cyan-400"
                     : "bg-zinc-900 border-white/[0.08] text-zinc-400 hover:border-cyan-500/20 hover:text-cyan-400"
                 }`}
               >
@@ -754,6 +755,7 @@ function OrchestrationTab() {
             </button>
           );
         })}
+        </div>
       </div>
 
       {/* Active node detail */}
@@ -856,6 +858,14 @@ export default function DashboardShowcase() {
       onKeyDownCapture={handleInteraction}
       className="relative py-10 md:py-14 px-6 bg-black z-10 flex flex-col items-center overflow-hidden"
     >
+      {/* Background Grid */}
+      <div
+        className="absolute inset-0 z-0 opacity-[0.02] pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
+          backgroundSize: "45px 45px",
+        }}
+      />
       {/* Background soft glow behind showcase */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0 w-[600px] h-[600px] rounded-full bg-cyan-500/[0.03] blur-[150px]" />
 
@@ -873,7 +883,7 @@ export default function DashboardShowcase() {
 
       {/* mock browser container */}
       <div
-        className="relative max-w-4xl w-full aspect-[16/10.5] rounded-3xl border border-white/[0.12] bg-zinc-950/40 backdrop-blur-md p-3 overflow-hidden shadow-2xl z-10 flex flex-col"
+        className="relative max-w-4xl w-full aspect-auto min-h-[520px] md:aspect-[16/10.5] rounded-3xl border border-white/[0.12] bg-zinc-950/40 backdrop-blur-md p-3 overflow-hidden shadow-2xl z-10 flex flex-col"
       >
         {/* Browser Top nav Bar */}
         <div className="flex items-center justify-between pb-3.5 border-b border-white/[0.05]">
@@ -892,11 +902,11 @@ export default function DashboardShowcase() {
         </div>
 
         {/* Console Workspace Layout */}
-        <div className="flex-1 grid grid-cols-12 min-h-0 pt-3">
+        <div className="flex-1 flex flex-col md:grid md:grid-cols-12 min-h-0 pt-3">
           {/* Dashboard Left Sidebar */}
-          <div className="col-span-3 border-r border-white/[0.05] pr-3 flex flex-col justify-between">
-            <div className="space-y-1.5">
-              <span className="text-[9px] text-zinc-600 font-bold uppercase tracking-widest pl-2 mb-2 block">Navigation</span>
+          <div className="col-span-12 md:col-span-3 border-b md:border-b-0 md:border-r border-white/[0.05] pb-3 md:pb-0 md:pr-3 flex flex-col sm:flex-row md:flex-col justify-between gap-3">
+            <div className="flex flex-row md:flex-col overflow-x-auto md:overflow-x-visible gap-1.5 pb-2 md:pb-0 scrollbar-none w-full">
+              <span className="text-[9px] text-zinc-600 font-bold uppercase tracking-widest pl-2 mb-2 hidden md:block">Navigation</span>
               {tabs.map((tab, idx) => {
                 const TabIcon = tab.icon;
                 const isActive = idx === activeTabIdx;
@@ -904,7 +914,7 @@ export default function DashboardShowcase() {
                   <button
                     key={idx}
                     onClick={() => setActiveTabIdx(idx)}
-                    className={`w-full text-left py-2 px-3 rounded-xl text-xs font-semibold flex items-center gap-2.5 cursor-pointer relative transition-all ${
+                    className={`text-left py-2 px-3 rounded-xl text-xs font-semibold flex items-center gap-2.5 cursor-pointer relative transition-all flex-shrink-0 ${
                       isActive
                         ? "text-cyan-400 bg-white/[0.04] border border-white/[0.05]"
                         : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.02] border border-transparent"
@@ -918,14 +928,14 @@ export default function DashboardShowcase() {
             </div>
             
             {/* Connection badge */}
-            <div className="p-3 bg-zinc-900/40 border border-white/[0.04] rounded-xl flex items-center gap-2">
+            <div className="hidden md:flex p-3 bg-zinc-900/40 border border-white/[0.04] rounded-xl items-center gap-2">
               <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
               <span className="font-mono text-[9px] text-zinc-500">Agent: VPC.Active</span>
             </div>
           </div>
 
           {/* Main Tab Content Viewport */}
-          <div className="col-span-9 pl-4 h-full overflow-hidden">
+          <div className="col-span-12 md:col-span-9 pt-4 md:pt-0 md:pl-4 h-full overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTabIdx}

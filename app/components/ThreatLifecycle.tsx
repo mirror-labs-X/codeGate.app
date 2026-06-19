@@ -207,7 +207,7 @@ function TokenBatchingSimulator() {
         {/* Incoming Files Queue */}
         <div className="mb-4">
           <span className="text-zinc-500 block mb-1.5 uppercase text-[9px] tracking-wider font-bold">Scanning Queue:</span>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {queue.map((file, idx) => (
               <span
                 key={idx}
@@ -227,7 +227,7 @@ function TokenBatchingSimulator() {
 
         {/* Token Partition Batches */}
         <span className="text-zinc-500 block mb-1.5 uppercase text-[9px] tracking-wider font-bold">Context-Optimized Batches:</span>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {batches.map((batch, idx) => (
             <div key={idx} className="p-3 bg-zinc-900/60 border border-white/[0.08] rounded-xl flex flex-col justify-between min-h-[100px]">
               <div>
@@ -257,7 +257,7 @@ function TokenBatchingSimulator() {
       </div>
 
       <div className="flex flex-col gap-3 mt-4">
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <button
             onClick={handleProcessNext}
             disabled={queueIndex >= queue.length}
@@ -565,7 +565,7 @@ function SandboxTriageSimulator() {
       </div>
 
       <div className="flex flex-col gap-3 mt-4">
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <button
             onClick={triggerManualTriage}
             disabled={isTriageLoading || (currentStep > 0 && currentStep < SANDBOX_STEPS.length)}
@@ -798,7 +798,7 @@ function StepButton({ step, isActive, onClick, onMouseEnter, onMouseLeave }: Ste
       onMouseMove={handleMouseMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className={`group w-full text-left p-6 rounded-2xl border transition-all duration-300 flex items-start gap-4 cursor-pointer relative overflow-hidden active:scale-[0.97] ${
+      className={`group w-full text-left p-4 sm:p-5 md:p-6 rounded-2xl border transition-all duration-300 flex items-start gap-4 cursor-pointer relative overflow-hidden active:scale-[0.97] ${
         isActive
           ? "z-10 border-cyan-500/40 shadow-[0_0_20px_rgba(6,182,212,0.08)] bg-zinc-950/60 scale-[1.02] hover:scale-105 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)]"
           : "z-0 hover:z-20 border-white/[0.08] bg-zinc-950/20 hover:bg-zinc-900/40 hover:border-cyan-400/60 hover:shadow-[0_0_25px_rgba(6,182,212,0.12)] scale-100 hover:scale-105"
@@ -908,7 +908,7 @@ function ShowcaseCard({ children, onMouseEnter, onMouseLeave }: ShowcaseCardProp
       onMouseMove={handleMouseMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className="lg:col-span-7 flex flex-col justify-between h-full bg-zinc-950/40 border border-white/[0.12] rounded-3xl p-8 relative overflow-hidden backdrop-blur-xl group hover:border-white/[0.22] transition-colors duration-300"
+      className="lg:col-span-7 flex flex-col justify-between h-full bg-zinc-950/40 border border-white/[0.12] rounded-3xl p-5 sm:p-6 md:p-8 relative overflow-hidden backdrop-blur-xl group hover:border-white/[0.22] transition-colors duration-300"
     >
       {/* Light glow overlay following mouse */}
       <motion.div
@@ -983,6 +983,14 @@ export default function ThreatLifecycle() {
       onKeyDownCapture={handleInteraction}
       className="relative py-10 md:py-14 px-6 bg-black z-10 overflow-hidden"
     >
+      {/* Background Grid */}
+      <div
+        className="absolute inset-0 z-0 opacity-[0.02] pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
+          backgroundSize: "45px 45px",
+        }}
+      />
       {/* Background glow effects */}
       <div className="absolute top-1/4 left-0 pointer-events-none z-0 w-[400px] h-[400px] rounded-full bg-cyan-500/[0.02] blur-[120px]" />
       <div className="absolute bottom-1/4 right-0 pointer-events-none z-0 w-[400px] h-[400px] rounded-full bg-indigo-500/[0.02] blur-[120px]" />
@@ -1002,61 +1010,137 @@ export default function ThreatLifecycle() {
         </div>
 
         {/* Layout grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Interactive Steps List */}
           <div className="lg:col-span-5 space-y-4">
-            {steps.map((step) => (
-              <StepButton
-                key={step.id}
-                step={step}
-                isActive={step.id === activeStepId}
-                onClick={() => setActiveStepId(step.id)}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-              />
-            ))}
+            {steps.map((step) => {
+              const isActive = step.id === activeStepId;
+              const StepSimulator = step.simulator;
+              return (
+                <React.Fragment key={step.id}>
+                  <StepButton
+                    step={step}
+                    isActive={isActive}
+                    onClick={() => setActiveStepId(step.id)}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                  />
+                  {/* Inline Showcase Card for Mobile with smooth accordion height transition */}
+                  <AnimatePresence initial={false}>
+                    {isActive && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ 
+                          opacity: 1, 
+                          height: "auto",
+                          transition: {
+                            height: {
+                              type: "spring",
+                              stiffness: 100,
+                              damping: 20,
+                              restDelta: 2
+                            },
+                            opacity: {
+                              duration: 0.2,
+                              delay: 0.05
+                            }
+                          }
+                        }}
+                        exit={{ 
+                          opacity: 0, 
+                          height: 0,
+                          transition: {
+                            height: {
+                              duration: 0.25,
+                              ease: "easeInOut"
+                            },
+                            opacity: {
+                              duration: 0.15
+                            }
+                          }
+                        }}
+                        className="block lg:hidden w-full overflow-hidden"
+                      >
+                        <div className="pt-2 pb-4">
+                          <ShowcaseCard
+                            onMouseEnter={() => setIsHovered(true)}
+                            onMouseLeave={() => setIsHovered(false)}
+                          >
+                            {/* Visual Simulator Viewer Wrapper */}
+                            <div className="relative z-20 w-full aspect-auto min-h-[300px] rounded-2xl overflow-hidden">
+                              <StepSimulator />
+                            </div>
+
+                            {/* Explanatory notes under the active screen */}
+                            <div className="mt-6 relative z-20">
+                              <h4 className="text-xs font-semibold text-white mb-2">Key Customer Benefits</h4>
+                              <ul className="flex flex-col gap-2">
+                                {step.bulletPoints.map((point, idx) => {
+                                  const [boldText, normalText] = point.split(":");
+                                  return (
+                                    <li key={idx} className="flex items-start gap-2 text-[11px] text-zinc-400 leading-normal">
+                                      <span className="text-cyan-400 mt-0.5 font-bold flex-shrink-0">✓</span>
+                                      <span>
+                                        <strong className="text-zinc-200">{boldText}:</strong>
+                                        {normalText}
+                                      </span>
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            </div>
+                          </ShowcaseCard>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </React.Fragment>
+              );
+            })}
           </div>
 
-          {/* Right Column: Tab View Showcase */}
-          <ShowcaseCard
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            {/* Visual Simulator Viewer Wrapper */}
-            <div className="relative z-20 w-full aspect-[4/3] rounded-2xl overflow-hidden">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeStep.id}
-                  initial={{ opacity: 0, x: 20, scale: 0.98 }}
-                  animate={{ opacity: 1, x: 0, scale: 1 }}
-                  exit={{ opacity: 0, x: -20, scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                  className="w-full h-full relative"
-                >
-                  <ActiveSimulator />
-                </motion.div>
-              </AnimatePresence>
-            </div>
+          {/* Right Column: Tab View Showcase (Desktop only) */}
+          <div className="hidden lg:block lg:col-span-7 h-full">
+            <ShowcaseCard
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              {/* Visual Simulator Viewer Wrapper */}
+              <div className="relative z-20 w-full aspect-auto md:aspect-[4/3] min-h-[350px] md:min-h-0 rounded-2xl overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeStep.id}
+                    initial={{ opacity: 0, x: 20, scale: 0.98 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: -20, scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                    className="w-full h-full relative"
+                  >
+                    <ActiveSimulator />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
 
-            {/* Explanatory notes under the active screen */}
-            <div className="mt-8 relative z-20">
-              <h4 className="text-sm font-semibold text-white mb-3">Key Customer Benefits</h4>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {activeStep.bulletPoints.map((point, idx) => {
-                  const [boldText, normalText] = point.split(":");
-                  return (
-                    <li key={idx} className="flex items-start gap-2 text-xs text-zinc-400 leading-normal">
-                      <span className="text-cyan-400 mt-1 font-bold">✓</span>
-                      <span>
-                        <strong className="text-zinc-200">{boldText}:</strong>
-                        {normalText}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </ShowcaseCard>
+              {/* Explanatory notes under the active screen */}
+              <div className="mt-8 relative z-20">
+                <h4 className="text-sm font-semibold text-white mb-3">Key Customer Benefits</h4>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {activeStep.bulletPoints.map((point, idx) => {
+                    const [boldText, normalText] = point.split(":");
+                    return (
+                      <li key={idx} className="flex items-start gap-2 text-xs text-zinc-400 leading-normal">
+                        <span className="text-cyan-400 mt-1 font-bold">✓</span>
+                        <span>
+                          <strong className="text-zinc-200">{boldText}:</strong>
+                          {normalText}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </ShowcaseCard>
+          </div>
         </div>
       </div>
     </section>
