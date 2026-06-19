@@ -83,7 +83,7 @@ export default function Footer({ onOpenDemo }: FooterProps) {
             <a href="#" className="hover:text-zinc-300 transition-colors">
               Terms of Service
             </a>
-            <a href="mailto:security@codegate.app" className="hover:text-zinc-300 transition-colors">
+            <a href="mailto:hello@codegate.app" className="hover:text-zinc-300 transition-colors">
               Contact
             </a>
           </div>
